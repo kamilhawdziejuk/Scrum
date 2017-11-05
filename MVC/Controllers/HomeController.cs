@@ -22,6 +22,12 @@ namespace ScrumMvc.Controllers
             return View();
         }
 
+        public IActionResult Daily()
+        {
+            var part = new Participants();
+            return View(part.List);
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
