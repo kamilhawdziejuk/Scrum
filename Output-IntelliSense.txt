@@ -1,0 +1,1 @@
+﻿[Failure] Could not find file 'C:\Sources\Scrum\obj\Debug\netcoreapp2.0\Scrum.AssemblyInfo.cs'.
