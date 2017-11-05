@@ -25,6 +25,7 @@ namespace ScrumMvc.Controllers
         public IActionResult Daily()
         {
             var part = new Participants();
+            part.Randomize();
             return View(part.List);
         }
 
