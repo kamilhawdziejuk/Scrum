@@ -26,6 +26,7 @@ namespace ScrumMvc.Controllers
         {
             var part = new Participants();
             part.Randomize();
+            ViewBag.CurrentDate = DateTime.Now.ToString();
             return View(part.List);
         }
 
