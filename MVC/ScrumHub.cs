@@ -8,9 +8,15 @@ namespace ScrumMvc
 {
     public class ScrumHub : Hub
     {
-        public Task Send(string message)
+        //public Task Send(string message)
+        //{
+        //    return Clients.All.InvokeAsync("Send", message);
+        //}
+
+        public void Send(string name, string message)
         {
-            return Clients.All.InvokeAsync("Send", message);
+            // Call the broadcastMessage method to update clients.
+            Clients.All.InvokeAsync("broadcastMessage", name, message);
         }
 
         public void GetTime(string countryZone)
