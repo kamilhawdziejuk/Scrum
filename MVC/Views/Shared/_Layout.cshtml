@@ -18,7 +18,7 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container">            
             @*<div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -30,11 +30,14 @@
             </div>*@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
                     <li><a asp-area="" asp-controller="Home" asp-action="Daily">Daily</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Retrospective">Retrospective</a></li>
+                    <li><img src="~/images/easylobby.jpg" height="60"/></li>
                     @*<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                 </ul>
             </div>
+            
         </div>
     </nav>
     <div class="container body-content">

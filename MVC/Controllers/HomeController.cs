@@ -30,6 +30,13 @@ namespace ScrumMvc.Controllers
             return View(part.List);
         }
 
+        public IActionResult Retrospective()
+        {
+            ViewBag.CurrentDate = DateTime.Now.ToString();
+            return View();
+        }
+
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
