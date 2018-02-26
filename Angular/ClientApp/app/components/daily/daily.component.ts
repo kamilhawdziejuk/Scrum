@@ -17,5 +17,5 @@ export class DailyComponent {
 
 interface Daily {
     name: string;
-    summary: string;
+    time: string;
 }

@@ -13,7 +13,7 @@ namespace Scrum.Controllers
             var participants = new List<string>() { "Antra", "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve" };
             foreach (var p in participants)
             {
-                List.Add(new Participant() { Name = p });
+                List.Add(new Participant() { Name = p, Time = "~2.5mins" });
             }
         }
 
@@ -44,7 +44,7 @@ namespace Scrum.Controllers
         public class Participant
         {
             public string Name { get; set; }
-            public string Summary { get; set; }
+            public string Time { get; set; }
         }
     }
 }
