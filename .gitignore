@@ -298,3 +298,14 @@
 /MVC/wwwroot/lib/signalr/*.gitignore
 /MVC/wwwroot/lib/signalr/*.md
 /MVC/wwwroot/lib/signalr/*.js
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/.bower.json
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/.gitignore
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/LICENSE.md
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/README.md
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/bower.json
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/jquery.signalR.js
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/jquery.signalR.min.js
+/MVC/obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib/signalr/package.json
+/MVC/Properties/PublishProfiles/CustomProfile.pubxml
+/MVC/Properties/PublishProfiles/CustomProfile.pubxml.user
+/MVC/ScrumMvc.v12.suo
