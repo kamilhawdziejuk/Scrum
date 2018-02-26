@@ -1,0 +1,20 @@
+<h1>Daily meeting sequence generator</h1>
+
+<p>This component demonstrates fetching daily sequence of the team members.</p>
+
+<p *ngIf="!dailyUsers"><em>Loading...</em></p>
+
+<table class='table' *ngIf="dailyUsers">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of dailyUsers">
+            <td>{{ user.name }}</td>
+            <td>{{ user.summary }}</td>
+        </tr>
+    </tbody>
+</table>
