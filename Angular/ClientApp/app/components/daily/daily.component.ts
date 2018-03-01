@@ -7,11 +7,21 @@ import { Http } from '@angular/http';
 })
 export class DailyComponent {
     public dailyUsers: Daily[];
+    public timer: number;
 
     constructor(http: Http, @Inject('ORIGIN_URL') originUrl: string) {
         http.get(originUrl + '/api/Daily/RandomizeParticipants').subscribe(result => {
             this.dailyUsers = result.json() as Daily[];
         });
+        this.timer = 1;
+        this.utcTime();
+    }
+
+    utcTime(): void {
+        setInterval(() => {
+            this.timer = this.timer+1;
+        }, 1000);
+       
     }
 }
 
