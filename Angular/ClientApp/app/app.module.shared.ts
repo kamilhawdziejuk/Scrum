@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { DailyComponent } from './components/daily/daily.component';
 
@@ -16,7 +15,6 @@ import { DailyComponent } from './components/daily/daily.component';
         AppComponent,
         NavMenuComponent,
         CounterComponent,
-        FetchDataComponent,
         HomeComponent,
         DailyComponent
     ],
@@ -29,7 +27,6 @@ import { DailyComponent } from './components/daily/daily.component';
             { path: 'daily', component: DailyComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]
