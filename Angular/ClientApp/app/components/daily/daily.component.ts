@@ -7,19 +7,25 @@ import { Http } from '@angular/http';
 })
 export class DailyComponent {
     public dailyUsers: Daily[];
-    public timer: number;
+    private currentNr: number;
 
     constructor(http: Http, @Inject('ORIGIN_URL') originUrl: string) {
         http.get(originUrl + '/api/Daily/RandomizeParticipants').subscribe(result => {
             this.dailyUsers = result.json() as Daily[];
         });
-        this.timer = 1;
+        this.currentNr = -1;
         this.utcTime();
+    }
+
+    public incrementCounter() {
+        this.currentNr++;
     }
 
     utcTime(): void {
         setInterval(() => {
-            this.timer = this.timer+1;
+            if (this.currentNr >= 0) {
+                this.dailyUsers[this.currentNr].timer++;
+            }
         }, 1000);
        
     }
@@ -27,5 +33,5 @@ export class DailyComponent {
 
 interface Daily {
     name: string;
-    time: string;
+    timer: number;
 }

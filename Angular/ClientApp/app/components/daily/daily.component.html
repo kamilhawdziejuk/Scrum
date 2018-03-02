@@ -6,21 +6,23 @@
     3.	Are there any impediments in your way? <br />
 </p>
 
-<div>Timer: {{ timer }}</div>
-
 <p *ngIf="!dailyUsers"><em>Loading...</em></p>
 
 <table class='table' *ngIf="dailyUsers">
     <thead>
         <tr>
+            <th>Nr</th>
             <th>Name</th>
-            <th>Time per user</th>
+            <th>Seconds</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let user of dailyUsers">
+            <td>
+                <button (click)="incrementCounter()">Go</button>
+            </td>
             <td>{{ user.name }}</td>
-            <td>{{ user.time }}</td>
+            <td>{{ user.timer }}</td>
         </tr>
     </tbody>
 </table>
