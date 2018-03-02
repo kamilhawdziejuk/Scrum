@@ -17,8 +17,8 @@ export class DailyComponent {
         this.utcTime();
     }
 
-    public incrementCounter() {
-        this.currentNr++;
+    public setCurrentUserNr(nr : number) {
+        this.currentNr = nr;
     }
 
     utcTime(): void {

@@ -17,9 +17,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of dailyUsers">
+        <tr *ngFor="let user of dailyUsers; let i = index">
             <td>
-                <button (click)="incrementCounter()">Go</button>
+                <button (click)="setCurrentUserNr(i)">Go</button>
             </td>
             <td>{{ user.name }}</td>
             <td>{{ user.timer }}</td>
