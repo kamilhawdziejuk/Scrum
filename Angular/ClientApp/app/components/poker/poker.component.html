@@ -1,28 +1,28 @@
-<h1>Daily meeting sequence generator</h1>
+<h1>Planning Poker</h1>
 
 <p>
-    1.	What did you do since last daily? <br />
-    2.	What will you do until the next one? <br />
-    3.	Are there any impediments in your way? <br />
+    How would you estimate the item?
 </p>
 
-<p *ngIf="!dailyUsers"><em>Loading...</em></p>
+<p *ngIf="!pokerValues"><em>Loading...</em></p>
 
-<table class='table' *ngIf="dailyUsers">
+<table class='table' *ngIf="pokerValues">
     <thead>
         <tr>
             <th>Nr</th>
-            <th>Name</th>
+            <th>User</th>
             <th>Points</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of dailyUsers; let i = index">
+        <tr *ngFor="let user of pokerValues; let i = index">
             <td>
-                <button (click)="setCurrentUserPokerValue(i)">Go</button>
+                <button (click)="setCurrentPokerValue(i)">Go</button>
             </td>
             <td>{{ user.name }}</td>
-            <td>{{ user.timer }}</td>
+            <td>
+                <input type="text" value="{{ user.points}}"/>
+            </td>
         </tr>
     </tbody>
 </table>
