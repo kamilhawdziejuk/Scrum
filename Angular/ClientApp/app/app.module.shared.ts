@@ -9,6 +9,7 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { DailyComponent } from './components/daily/daily.component';
+import { PokerComponent } from './components/poker/poker.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { DailyComponent } from './components/daily/daily.component';
         NavMenuComponent,
         CounterComponent,
         HomeComponent,
-        DailyComponent
+        DailyComponent,
+        PokerComponent
     ],
     imports: [
         CommonModule,
@@ -27,6 +29,7 @@ import { DailyComponent } from './components/daily/daily.component';
             { path: 'daily', component: DailyComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
+            { path: 'poker', component: PokerComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]

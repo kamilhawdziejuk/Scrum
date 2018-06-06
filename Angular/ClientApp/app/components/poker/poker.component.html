@@ -11,13 +11,13 @@
         <tr>
             <th>Nr</th>
             <th>User</th>
-            <th>Points</th>
+            <th>Points estimation</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let user of pokerValues; let i = index">
             <td>
-                <button (click)="setCurrentPokerValue(i)">Go</button>
+                <button (click)="setCurrentPokerValue(i)">Set</button>
             </td>
             <td>{{ user.name }}</td>
             <td>
