@@ -1,9 +1,9 @@
 ﻿namespace Scrum.Models
 {
-    public class Participant
+    public class PokerValue
     {
         public string Name { get; set; }
 
-        public int Timer { get; set; }
+        public int Points { get; set; }
     }
 }

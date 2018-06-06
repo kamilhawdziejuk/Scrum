@@ -13,13 +13,13 @@
         <tr>
             <th>Nr</th>
             <th>Name</th>
-            <th>Seconds</th>
+            <th>Points</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let user of dailyUsers; let i = index">
             <td>
-                <button (click)="setCurrentUserNr(i)">Start</button>
+                <button (click)="setCurrentUserPokerValue(i)">Go</button>
             </td>
             <td>{{ user.name }}</td>
             <td>{{ user.timer }}</td>

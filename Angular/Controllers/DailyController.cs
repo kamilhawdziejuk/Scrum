@@ -10,7 +10,7 @@ namespace Scrum.Controllers
         public DailyController()
         {
             List = new List<Participant>();
-            var participants = new List<string>() { "Antra", "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve" };
+            var participants = new List<string>() { "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve" };
             foreach (var p in participants)
             {
                 List.Add(new Participant() { Name = p, Timer = 0 });
@@ -39,13 +39,6 @@ namespace Scrum.Controllers
                 list[k] = list[n];
                 list[n] = value;
             }
-        }
-
-        public class Participant
-        {
-            public string Name { get; set; }
-
-            public int Timer { get; set; }
         }
     }
 }
