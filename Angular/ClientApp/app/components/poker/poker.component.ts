@@ -25,8 +25,6 @@ export class PokerComponent {
     private currentNr: number;
     private _http: Http;
     private _originUrl: string;
-    headers: Headers;
-    options: RequestOptions;
 
     constructor(http: Http, @Inject('ORIGIN_URL') originUrl: string) {
         http.get(originUrl + '/api/Poker/GetPokerValues').subscribe(result => {
@@ -36,26 +34,18 @@ export class PokerComponent {
         this.currentNr = -1;
         this._originUrl = originUrl;
 
-
-        this.headers = new Headers({
-            'Content-Type': 'application/json',
-            'Accept': 'q=0.8;application/json;q=0.9'
-        });
-        this.options = new RequestOptions({ headers: this.headers });
         this.utcTime();
     }
 
     public setCurrentPokerValue(nr: number) {
         this.currentNr = nr;
 
-        let currentPokerValue = this.pokerValues[nr];
-        let data = JSON.stringify(currentPokerValue);
-
+        let dataToPass = JSON.stringify(this.pokerValues[nr]);
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
 
         var url = this._originUrl + '/api/Poker/SetPokerValue';
-        this._http.post(url, data, {
+        this._http.post(url, dataToPass, {
             headers: headers
         }).map(response => response.json());        
     }   
@@ -70,9 +60,8 @@ export class PokerComponent {
                     }
                 }
             }
-        }, 1000);       
+        }, 5000);       
     }
-
 }
 
 interface PokerValue {
