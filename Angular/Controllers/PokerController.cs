@@ -26,17 +26,18 @@ namespace Scrum.Controllers
         }
 
         [HttpPost("[action]")]
-        public void SetPokerValue(int id)
+        //[HttpPost()]
+        //[Route("SetPokerValue")]
+        public ActionResult SetPokerValue(string someVar)
         {
-            foreach (var elem in List)
+            if (someVar != null)
             {
-                //if (elem.Name.Equals(pokerValue.Name))
-                //{
-                //    elem.Points = pokerValue.Points;
-                //}
+                return Json("Success");
             }
-
-            //return null;
+            else
+            {
+                return Json("An Error Has occoured");
+            }
         }
     }
 }

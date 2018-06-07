@@ -31,7 +31,6 @@ export class PokerComponent {
     constructor(http: Http, @Inject('ORIGIN_URL') originUrl: string) {
         http.get(originUrl + '/api/Poker/GetPokerValues').subscribe(result => {
             this.pokerValues = result.json() as PokerValue[];
-            this.randomPokerValues = result.json() as PokerValue[];
         });
         this._http = http;
         this.currentNr = -1;
@@ -49,18 +48,16 @@ export class PokerComponent {
     public setCurrentPokerValue(nr: number) {
         this.currentNr = nr;
 
-        //let currentPokerValue = this.pokerValues[nr];
-        //for (var i = 0, n = this.pokerValues.length; i < n; i++) {
-        //    this.pokerValues[i].editable = false;
-        //}
-        //this.pokerValues[nr].editable = true;
-        //var data = { id = "4" };
-        //let data = JSON.stringify(currentPokerValue);
-        var data = { id: 4 };
-        //this.options = new RequestOptions({ headers: this.headers, params: data });
-        //var url = this._originUrl + '/api/Poker/SetPokerValue';
-       // this._http.get(this._originUrl + '/api/Poker/GetPokerValues');
-        //this._http.get(url, this.options);//, this.options);
+        let currentPokerValue = this.pokerValues[nr];
+        let data = JSON.stringify(currentPokerValue);
+
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+
+        var url = this._originUrl + '/api/Poker/SetPokerValue';
+        this._http.post(url, data, {
+            headers: headers
+        }).map(response => response.json());        
     }   
 
     utcTime(): void {
