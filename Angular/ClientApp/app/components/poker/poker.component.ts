@@ -47,7 +47,8 @@ export class PokerComponent {
         var url = this._originUrl + '/api/Poker/SetPokerValue';
         this._http.post(url, dataToPass, {
             headers: headers
-        }).map(response => response.json());        
+        }).map(response => response.json())
+            .subscribe();        
     }   
 
     utcTime(): void {

@@ -13,7 +13,7 @@ namespace Scrum.Controllers
             var participants = new List<string>() { "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve" };
             foreach (var p in participants)
             {
-                List.Add(new PokerValue() { Name = p, Points = 0, Editable = true});
+                List.Add(new PokerValue() { name = p, points = 0, editable = true});
             }
         }
 
@@ -26,9 +26,7 @@ namespace Scrum.Controllers
         }
 
         [HttpPost("[action]")]
-        //[HttpPost()]
-        //[Route("SetPokerValue")]
-        public ActionResult SetPokerValue(string someVar)
+        public ActionResult SetPokerValue(PokerValue someVar)
         {
             if (someVar != null)
             {
