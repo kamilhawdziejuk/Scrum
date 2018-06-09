@@ -26,7 +26,7 @@ namespace Scrum.Controllers
         }
 
         [HttpPost("[action]")]
-        public ActionResult SetPokerValue(PokerValue someVar)
+        public ActionResult SetPokerValue([FromBody] PokerValue someVar)
         {
             if (someVar != null)
             {
