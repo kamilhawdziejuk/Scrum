@@ -11,7 +11,7 @@ namespace Scrum.Controllers
         public DailyController()
         {
             List = new List<Participant>();
-            var participants = new List<string>() { "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve" };
+            var participants = new List<string>() { "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve", "Piotr", "Dominika" };
             foreach (var p in participants)
             {
                 List.Add(new Participant() { Name = p, Timer = 0 });

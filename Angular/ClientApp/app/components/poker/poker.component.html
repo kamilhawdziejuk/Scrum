@@ -21,7 +21,7 @@
             </td>
             <td>{{ user.name }}</td>
             <td>
-                <input type="text" value="{{ user.points}}"/>
+                <input type="text" value="{{ user.points }}" [(ngModel)]="user.points"/>
             </td>
         </tr>
     </tbody>

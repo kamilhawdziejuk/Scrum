@@ -6,18 +6,21 @@ namespace Scrum.Controllers
 {
     [Route("api/[controller]")]
     public class PokerController : Controller
-    {
+    {        
         public PokerController()
         {
-            List = new List<PokerValue>();
-            var participants = new List<string>() { "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve" };
-            foreach (var p in participants)
+            var participants = new List<string>() { "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve", "Piotr" };
+            if (List == null)
             {
-                List.Add(new PokerValue() { name = p, points = 0, editable = true});
+                List = new List<PokerValue>();
+                foreach (var p in participants)
+                {
+                    List.Add(new PokerValue() { name = p, points = 0, editable = true });
+                }
             }
         }
 
-        public List<PokerValue> List { get; set; }
+        public static List<PokerValue> List { get; set; }
 
         [HttpGet("[action]")]
         public IEnumerable<PokerValue> GetPokerValues()
@@ -30,11 +33,22 @@ namespace Scrum.Controllers
         {
             if (someVar != null)
             {
+                Update(someVar);
                 return Json("Success");
             }
             else
             {
                 return Json("An Error Has occoured");
+            }
+        }
+
+        private void Update(PokerValue input)
+        {
+            foreach (var elem in List)
+            {
+                if (elem.name != input.name) continue;
+                elem.points = input.points;
+                break;
             }
         }
     }

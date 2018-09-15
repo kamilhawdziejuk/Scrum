@@ -53,14 +53,14 @@ export class PokerComponent {
 
     utcTime(): void {
         setInterval(() => {
-            if (this.currentNr >= 0) {
+            //if (this.currentNr >= 0) {
 
-                for (var i = 0; i < this.pokerValues.length; i++) {
-                    if (i !== this.currentNr) {
-                        this.pokerValues[i].points = Math.floor(Math.random() * (21 - 0 + 1)) + 1;
-                    }
-                }
-            }
+            //    for (var i = 0; i < this.pokerValues.length; i++) {
+            //        if (i !== this.currentNr) {
+            //            this.pokerValues[i].points = Math.floor(Math.random() * (21 - 0 + 1)) + 1;
+            //        }
+            //    }
+            //}
         }, 5000);       
     }
 }
