@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Scrum.Models;
 
@@ -10,12 +11,21 @@ namespace Scrum.Controllers
     {
         public DailyController()
         {
-            List = new List<Participant>();
-            var participants = new List<string>() { "Arek", "Hubert", "Kamil", "Michal", "Lukasz", "Steve", "Piotr", "Dominika" };
-            foreach (var p in participants)
+            List = ReadParticipantsFromFile();
+        }
+
+        private List<Participant> ReadParticipantsFromFile()
+        {
+            var list = new List<Participant>();
+            using (StreamReader sr = new StreamReader("participants.txt"))
             {
-                List.Add(new Participant() { Name = p, Timer = 0 });
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    list.Add(new Participant() { Name = line, Timer = 0 });
+                }
             }
+            return list;
         }
 
         [HttpGet("[action]")]
