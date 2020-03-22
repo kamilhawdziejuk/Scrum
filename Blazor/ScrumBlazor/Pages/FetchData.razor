@@ -3,8 +3,7 @@
 @using System.Threading
 @using ScrumBlazor.Data
 @inject DailyService DailyService
-Timer: @time
-@_currentCount
+Daily Timer: @_timerSecondsCount
 
 <h1>Daily sequence generator</h1>
 
@@ -30,7 +29,7 @@ else
                 <tr>
                     <td>@participant.Name</td>
                     <td>@participant.Timer</td>
-                    <td><button class="btn btn-primary" @onclick="(() => IncrementCount(participant.Nr))">Start</button></td>
+                    <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
                 </tr>
             }
         </tbody>
@@ -39,33 +38,33 @@ else
 
 @code {
     Participant[] participants;
-    int time;
+    int _currentUserNr = -1;
+    Timer _updateTimer;
+    int _timerSecondsCount = 0;
+
     protected override async Task OnInitializedAsync()
     {
         participants = await DailyService.GetParticipants(DateTime.Now);
-
         _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
     }
-
-    private int Count { get; set; } = 10;
-
-    Timer _updateTimer;
-    int _currentCount = 0;
 
     public void Dispose()
     {
         _updateTimer.Dispose();
     }
 
-
-    void IncrementCount(int nr)
+    void ChangeCurrentUser(int userNrClicked)
     {
-
+        _currentUserNr = userNrClicked;
     }
 
     async Task UpdateCounter()
     {
-        _currentCount++;
+        _timerSecondsCount++;
+        if (this._currentUserNr >= 0)
+        {
+            participants[_currentUserNr].Timer++;
+        }
         StateHasChanged();
     }
 
