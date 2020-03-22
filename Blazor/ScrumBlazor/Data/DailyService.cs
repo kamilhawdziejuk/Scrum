@@ -14,8 +14,10 @@ namespace ScrumBlazor.Data
             //List = ReadParticipantsFromFile();
             List = new List<Participant>
             {
-                new Participant() {Name = "test user1", Timer = 0, Nr = 0},
-                new Participant() {Name = "test user2", Timer = 0, Nr = 1}
+                new Participant() {Name = "Kamil", Timer = 0, Nr = 0},
+                new Participant() {Name = "Sylwia", Timer = 0, Nr = 1},
+                new Participant() {Name = "Piotr", Timer = 0, Nr = 2},
+                new Participant() {Name = "Tomek", Timer = 0, Nr = 3}
             };
         }
 

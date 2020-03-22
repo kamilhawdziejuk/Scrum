@@ -3,11 +3,10 @@
 @using System.Threading
 @using ScrumBlazor.Data
 @inject DailyService DailyService
-Daily Timer: @_timerSecondsCount
+Daily Timer since start: @_timerSecondsCount sec.
 
-<h1>Daily sequence generator</h1>
-
-<p>This component demonstrates fetching data from a service.</p>
+<h4>Team sequence generated now:</h4>
+<br/>
 
 @if (participants == null)
 {
@@ -18,8 +17,8 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Timer</th>
+                <th>User</th>
+                <th>Time elapsed</th>
                 <th>Action</th>
             </tr>
         </thead>
