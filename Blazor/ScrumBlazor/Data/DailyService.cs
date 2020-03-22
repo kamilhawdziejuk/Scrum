@@ -12,8 +12,11 @@ namespace ScrumBlazor.Data
         public DailyService()
         {
             //List = ReadParticipantsFromFile();
-            List = new List<Participant>();
-            List.Add(new Participant() { Name = "test user", Timer = 2});
+            List = new List<Participant>
+            {
+                new Participant() {Name = "test user1", Timer = 0, Nr = 0},
+                new Participant() {Name = "test user2", Timer = 0, Nr = 1}
+            };
         }
 
         public async Task<Participant[]> GetParticipants(DateTime startDate)

@@ -18,15 +18,17 @@ else
             <tr>
                 <th>Name</th>
                 <th>Timer</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in participants)
+            @foreach (var participant in participants)
             {
-                <tr>
-                    <td>@forecast.Name</td>
-                    <td>@forecast.Timer</td>
-                </tr>
+            <tr>
+                <td>@participant.Name</td>
+                <td>@participant.Timer</td>
+                <td><button class="btn btn-primary" @onclick="(() => IncrementCount(participant.Nr))">Start</button></td>
+            </tr>
             }
         </tbody>
     </table>
@@ -38,5 +40,13 @@ else
     protected override async Task OnInitializedAsync()
     {
         participants = await DailyService.GetParticipants(DateTime.Now);
+    }
+
+    int currentCount = 0;
+
+    void IncrementCount(int nr)
+    {
+        participants[nr].Timer++;
+        //currentCount++;
     }
 }
