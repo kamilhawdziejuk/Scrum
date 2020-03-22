@@ -1,7 +1,10 @@
 ﻿@page "/fetchdata"
 
+@using System.Threading
 @using ScrumBlazor.Data
 @inject DailyService DailyService
+Timer: @time
+@_currentCount
 
 <h1>Daily sequence generator</h1>
 
@@ -24,11 +27,11 @@ else
         <tbody>
             @foreach (var participant in participants)
             {
-            <tr>
-                <td>@participant.Name</td>
-                <td>@participant.Timer</td>
-                <td><button class="btn btn-primary" @onclick="(() => IncrementCount(participant.Nr))">Start</button></td>
-            </tr>
+                <tr>
+                    <td>@participant.Name</td>
+                    <td>@participant.Timer</td>
+                    <td><button class="btn btn-primary" @onclick="(() => IncrementCount(participant.Nr))">Start</button></td>
+                </tr>
             }
         </tbody>
     </table>
@@ -36,17 +39,34 @@ else
 
 @code {
     Participant[] participants;
-
+    int time;
     protected override async Task OnInitializedAsync()
     {
         participants = await DailyService.GetParticipants(DateTime.Now);
+
+        _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
     }
 
-    int currentCount = 0;
+    private int Count { get; set; } = 10;
+
+    Timer _updateTimer;
+    int _currentCount = 0;
+
+    public void Dispose()
+    {
+        _updateTimer.Dispose();
+    }
+
 
     void IncrementCount(int nr)
     {
-        participants[nr].Timer++;
-        //currentCount++;
+
     }
+
+    async Task UpdateCounter()
+    {
+        _currentCount++;
+        StateHasChanged();
+    }
+
 }
