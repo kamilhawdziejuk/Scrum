@@ -1,0 +1,42 @@
+﻿@page "/fetchdata"
+
+@using ScrumBlazor.Data
+@inject DailyService DailyService
+
+<h1>Daily sequence generator</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (participants == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Timer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in participants)
+            {
+                <tr>
+                    <td>@forecast.Name</td>
+                    <td>@forecast.Timer</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    Participant[] participants;
+
+    protected override async Task OnInitializedAsync()
+    {
+        participants = await DailyService.GetParticipants(DateTime.Now);
+    }
+}
