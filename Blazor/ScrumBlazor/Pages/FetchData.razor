@@ -32,6 +32,10 @@ else
                 </tr>
             }
         </tbody>
+
+        <br />
+
+        <button class="btn btn-primary" @onclick="(() => Reset())">Reset</button>
     </table>
 }
 
@@ -50,6 +54,15 @@ else
     public void Dispose()
     {
         _updateTimer.Dispose();
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < participants.Length; i++)
+        {
+            participants[i].Timer = 0;
+        }
+        _currentUserNr = -1;
     }
 
     void ChangeCurrentUser(int userNrClicked)
