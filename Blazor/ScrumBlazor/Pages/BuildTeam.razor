@@ -1,3 +1,22 @@
 ﻿@page "/buildteam"
 
-<h3>Create your team here:</h3>
+@using System.Threading
+@using ScrumBlazor.Data
+@inject DailyService DailyService
+
+<h4>Build team:</h4>
+<br />
+
+<td><button class="btn btn-primary" @onclick="(() => Create())">Create</button></td>
+
+
+@code {
+
+
+    public void Create()
+    {
+
+    }
+
+
+}

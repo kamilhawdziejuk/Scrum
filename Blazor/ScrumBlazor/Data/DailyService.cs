@@ -11,6 +11,8 @@ namespace ScrumBlazor.Data
     {
         public DailyService()
         {
+            LowLevelTableExample.Run();
+
             //List = ReadParticipantsFromFile();
             List = new List<Participant>
             {
