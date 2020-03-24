@@ -2,4 +2,5 @@
 /Blazor/ScrumBlazor/bin/*
 /Blazor/.vs/*
 /Blazor/ScrumBlazor/ScrumBlazor.csproj.user
+/Blazor/ScrumBlazor/Properties/PublishProfiles/*
 
