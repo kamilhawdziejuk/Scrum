@@ -10,9 +10,7 @@ namespace ScrumBlazor.Data
     public class DailyService
     {
         public DailyService()
-        {
-            LowLevelTableExample.Run();
-
+        { 
             //List = ReadParticipantsFromFile();
             List = new List<Participant>
             {
@@ -25,7 +23,6 @@ namespace ScrumBlazor.Data
 
         public async Task<Participant[]> GetParticipants(DateTime startDate)
         {
-            var rng = new Random();
             return List.ToArray();
         }
 

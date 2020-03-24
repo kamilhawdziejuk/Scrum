@@ -2,21 +2,48 @@
 
 @using System.Threading
 @using ScrumBlazor.Data
-@inject DailyService DailyService
+@inject TeamsService TeamService
 
 <h4>Build team:</h4>
 <br />
 
 <td><button class="btn btn-primary" @onclick="(() => Create())">Create</button></td>
 
+@if (participants == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var participant in participants)
+        {
+            <tr>
+                <td>@participant.Name</td>
+           </tr>
+        }
+        </tbody>
+    </table>
+}
 
 @code {
 
+    Participant[] participants;
+
+    protected override async Task OnInitializedAsync()
+    {
+        participants = await TeamService.Load();
+    }
 
     public void Create()
     {
-
+        TeamService.Create();
     }
-
 
 }
