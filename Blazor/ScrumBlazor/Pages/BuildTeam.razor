@@ -11,7 +11,7 @@
 <button @onclick="(() => CheckTeam())">Check Name</button>
 <label>@checkResult</label>
 
-<td><button class="btn btn-primary" @onclick="(() => Create())">Create</button></td>
+<td><button class="btn btn-primary" @onclick="(() => Initialize())">Initialize</button></td>
 
 @if (participants == null)
 {
@@ -45,9 +45,9 @@ else
         participants = await TeamService.Load();
     }
 
-    public void Create()
+    public void Initialize()
     {
-        TeamService.Create();
+        TeamService.Initialize();
     }
 
     private string newTeam;

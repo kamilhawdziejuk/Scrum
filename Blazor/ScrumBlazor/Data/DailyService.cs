@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,21 +8,24 @@ namespace ScrumBlazor.Data
 {
     public class DailyService
     {
-        public DailyService()
-        { 
-            //List = ReadParticipantsFromFile();
-            List = new List<Participant>
-            {
-                new Participant() {Name = "Kamil", Timer = 0, Nr = 0},
-                new Participant() {Name = "Sylwia", Timer = 0, Nr = 1},
-                new Participant() {Name = "Piotr", Timer = 0, Nr = 2},
-                new Participant() {Name = "Tomek", Timer = 0, Nr = 3}
-            };
-        }
-
-        public async Task<Participant[]> GetParticipants(DateTime startDate)
+        public async Task<Participant[]> GetParticipants(Team team)
         {
-            return List.ToArray();
+            var list = new List<Participant>();
+            if (team != null && team.Members != null && team.Members.Count > 0)
+            {
+                for (int i = 0; i < team.Members.Count; i++)
+                {
+                    Participant p = new Participant()
+                    {
+                        Name = team.Members[i].Name,
+                        Nr = i,
+                        Timer = 0
+                    };
+                    list.Add(p);
+                }
+            }
+
+            return list.ToArray();
         }
 
         private List<Participant> ReadParticipantsFromFile()

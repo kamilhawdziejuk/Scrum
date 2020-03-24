@@ -3,9 +3,20 @@
 @using System.Threading
 @using ScrumBlazor.Data
 @inject DailyService DailyService
-Daily Timer since start: @_timerSecondsCount sec.
+@inject TeamsService TeamsService
 
-<br /><br />
+Team Name: <input placeholder="Team Data" @bind="teamName" />
+Password: <input placeholder="Team Data" @bind="password" /> 
+
+<button @onclick="(() => LogIn())">Log in</button>
+<label>@loginResult</label>
+<br />
+<br />
+<hr />
+
+Daily Timer since start: @_timerSecondsCount sec.
+<br />
+<br />
 <h3>Agenda:</h3>
 <br />
 1. What did you do since last daily?
@@ -52,6 +63,13 @@ else
 }
 
 @code {
+
+    string teamName;
+    string password;
+    string loginResult;
+
+    Team team;
+
     Participant[] participants;
     int _currentUserNr = -1;
     Timer _updateTimer;
@@ -59,13 +77,34 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        participants = await DailyService.GetParticipants(DateTime.Now);
-        _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
+        //participants = await DailyService.GetParticipants(team);
+        //_updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
     }
 
     public void Dispose()
     {
         _updateTimer.Dispose();
+    }
+
+    public void LoadTeam()
+    {
+        team = TeamsService.GetTeam(teamName);
+    }
+
+    public async Task LogIn()
+    {
+        if (TeamsService.LogIn(teamName, password))
+        {
+            loginResult = "Fine";
+            team = TeamsService.GetTeam(teamName);
+            participants = await DailyService.GetParticipants(team);
+            _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
+        }
+        else
+        {
+            loginResult = "Incorrect";
+        }
+        StateHasChanged();
     }
 
     public void Reset()

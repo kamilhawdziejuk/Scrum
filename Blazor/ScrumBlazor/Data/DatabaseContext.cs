@@ -7,6 +7,8 @@ namespace ScrumBlazor.Data
     {
         public DbSet<Team> Teams { get; set; }
 
+        public DbSet<Member> Members { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("Data Source=sqlitedemo.db");
     }
