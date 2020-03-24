@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ScrumBlazor.Data
@@ -15,6 +16,14 @@ namespace ScrumBlazor.Data
             {
                 db.Teams.Add(new Team() { Name = "Team0", CreatedTime = DateTime.Now, Members = new List<Member>() });
                 db.SaveChanges();
+            }
+        }
+
+        public bool CheckTeamAvailability(string teamName)
+        {
+            using (var db = new DatabaseContext())
+            {
+                return (db.Teams.Count(t => t.Name.Equals(teamName)) == 0);
             }
         }
 
