@@ -23,9 +23,14 @@ namespace ScrumBlazor.Data
                     };
                     list.Add(p);
                 }
-            }
 
-            Shuffle<Participant>(list);
+                Shuffle<Participant>(list);
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].Nr = i;
+                }
+            }
 
             return list.ToArray();
         }
