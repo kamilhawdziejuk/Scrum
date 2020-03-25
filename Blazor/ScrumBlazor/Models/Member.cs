@@ -11,5 +11,6 @@ namespace ScrumBlazor.Data
         public Guid TeamId { get; set; }
         public string Name { get; set; }
         public DateTime CreatedTime { get; set; }
+        public double StoryPoint { get; set; }
     }
 }

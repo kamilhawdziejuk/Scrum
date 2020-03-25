@@ -11,6 +11,10 @@ namespace ScrumBlazor.Data
 
         public string Name { get; set; }
 
+        public string Password { get; set; }
+
+        public string TaskName { get; set; }
+
         public List<Member> Members { get; set; }
 
         public DateTime CreatedTime { get; set; }

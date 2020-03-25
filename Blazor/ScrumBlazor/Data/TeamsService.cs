@@ -11,19 +11,14 @@ namespace ScrumBlazor.Data
         public TeamsService()
         {
         }
-        public void Initialize()
+        public Team CreateTeam(string teamName)
         {
-            using (var db = new DatabaseContext())
-            {
-                var team = new Team() {Name = "Team1", CreatedTime = DateTime.Now};
-
-                List<Member> members = new List<Member>();
-                members.Add(new Member() { CreatedTime = DateTime.Now, Name = "Kamil", TeamId = team.Id});
-                members.Add(new Member() { CreatedTime = DateTime.Now, Name = "Sylwia", TeamId = team.Id});
-
-                db.Teams.Add(new Team() { Name = "Team1", CreatedTime = DateTime.Now, Members = members});
-                db.SaveChanges();
-            }
+            if (string.IsNullOrEmpty(teamName)) return null;
+            using var db = new DatabaseContext();
+            var team = new Team() {Name = teamName, CreatedTime = DateTime.Now, Members  = new List<Member>()};
+            db.Teams.Add(team);
+            db.SaveChanges();
+            return team;
         }
 
         public bool LogIn(string name, string password)

@@ -10,7 +10,8 @@
 <input placeholder="Check Team availability" @bind="newTeam" />
 <button class="btn btn-primary" @onclick="(() => CheckTeam())">Check Name</button>
 <label>@checkResult</label>
-
+<br/>
+<button disabled=@disabledTeamCreation class="btn btn-success" @onclick="(() => CreateTeam())">Create Team</button>
 
 @if (team == null)
 {
@@ -39,26 +40,30 @@ else
 
     <label>Add new team member:</label>
     <input placeholder="Member" @bind="newMember" />
-    <button class="btn btn-success" @onclick="(() => Add())">Add</button>
+    <button class="btn btn-success" @onclick="(() => Add())">Add member</button>
 }
 
 @code {
 
     Team team;
     string newMember;
+    bool disabledTeamCreation = true;
+    private string newTeam;
+    private string checkResult;
 
     protected override async Task OnInitializedAsync()
     {
-        //team = TeamService.GetTeam(newTeam);
-        //StateHasChanged();
     }
-
-    private string newTeam;
-    private string checkResult;
 
     private void Remove(int id)
     {
         team = TeamService.RemoveMember(team, id);
+        StateHasChanged();
+    }
+
+    private void CreateTeam()
+    {
+        team = TeamService.CreateTeam(newTeam);
         StateHasChanged();
     }
 
@@ -75,11 +80,14 @@ else
             if (TeamService.CheckTeamAvailability(newTeam))
             {
                 checkResult = "Team does not exist";
+                team = null;
+                disabledTeamCreation = false;
             }
             else
             {
                 team = TeamService.GetTeam(newTeam);
                 checkResult = "Team exists";
+                disabledTeamCreation = true;
             }
             StateHasChanged();
         }
