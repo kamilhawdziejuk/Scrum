@@ -10,7 +10,7 @@
 <p>
     Team Name: <input placeholder="Your team name" @bind="newTeam" />
     Password: <input placeholder="Your team password" @bind="newTeamPassword" type="password"/> 
-    <br/>
+    <br/> <br/>
     <button class="btn btn-primary" @onclick="(() => GetTeam())">Enter existing team</button>  
     <button class="btn btn-success" @onclick="(() => CreateTeam())">Register new team</button>
     <br/>
@@ -70,7 +70,12 @@ else
 
     private void CreateTeam()
     {
-        if (TeamService.GetTeam(newTeam) != null)
+        if (string.IsNullOrWhiteSpace(newTeam) || string.IsNullOrWhiteSpace(newTeamPassword))
+        {
+            checkResult = "Please provide non-empty team name and password.";
+            team = null;
+        }
+        else if (TeamService.GetTeam(newTeam) != null)
         {
             checkResult = "Team with a given name already exists. Please enter existing team with proper password.";
             team = null;

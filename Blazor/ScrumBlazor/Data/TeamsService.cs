@@ -35,12 +35,6 @@ namespace ScrumBlazor.Data
             return team.Password.Equals(hash) ? team : null;
         }
 
-
-        //public bool LogIn(string name, string password)
-        //{
-        //    return (!CheckTeamAvailability(name));
-        //}
-
         private string Encode(string password)
         {
             byte[] data = System.Text.Encoding.ASCII.GetBytes(password);
