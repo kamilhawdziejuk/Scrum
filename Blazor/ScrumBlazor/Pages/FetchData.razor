@@ -7,7 +7,7 @@
 @inject TeamsService TeamsService
 
 Team Name: <input placeholder="Your team name" @bind="teamName" />
-Password: <input placeholder="Your team password" @bind="password" /> 
+Password: <input placeholder="Your team password" @bind="password" type="password"/> 
 <br/>
 <label>@loginResult</label>
 <br/>
@@ -86,18 +86,17 @@ else
 
     public async Task LogIn()
     {
-        if (TeamsService.LogIn(teamName, password))
+        team = TeamsService.GetTeam(teamName, password);
+        if (team != null)
         {
             loginResult = "Correct credentials";
-            team = TeamsService.GetTeam(teamName);
             participants = await DailyService.GetParticipants(team);
             _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
         }
         else
         {
-            loginResult = "Incorrect credentials";
-            team = null;
-            participants = await DailyService.GetParticipants(team);
+            loginResult = "Wrong credentials";
+            participants = null;
         }
         StateHasChanged();
     }

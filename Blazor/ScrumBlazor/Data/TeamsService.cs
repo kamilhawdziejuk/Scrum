@@ -36,10 +36,10 @@ namespace ScrumBlazor.Data
         }
 
 
-        public bool LogIn(string name, string password)
-        {
-            return (!CheckTeamAvailability(name));
-        }
+        //public bool LogIn(string name, string password)
+        //{
+        //    return (!CheckTeamAvailability(name));
+        //}
 
         private string Encode(string password)
         {
