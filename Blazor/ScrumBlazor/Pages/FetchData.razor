@@ -48,11 +48,11 @@ else
         <tbody>
             @foreach (var participant in participants)
             {
-                <tr>
-                    <td>@participant.Name</td>
-                    <td>@participant.Timer</td>
-                    <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
-                </tr>
+            <tr>
+                <td>@participant.Name</td>
+                <td>@participant.Timer</td>
+                <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
+            </tr>
             }
         </tbody>
 

@@ -8,12 +8,11 @@
 <br />
 
 <input placeholder="Check Team availability" @bind="newTeam" />
-<button @onclick="(() => CheckTeam())">Check Name</button>
+<button class="btn btn-primary" @onclick="(() => CheckTeam())">Check Name</button>
 <label>@checkResult</label>
 
-<td><button class="btn btn-primary" @onclick="(() => Initialize())">Initialize</button></td>
 
-@if (participants == null)
+@if (team == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -21,38 +20,53 @@ else
 {
     <table class="table">
         <thead>
-        <tr>
-            <th>User</th>
-        </tr>
+            <tr>
+                <th>User Name</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var participant in participants)
-        {
-            <tr>
-                <td>@participant.Name</td>
-           </tr>
-        }
+            @foreach (var member in team.Members)
+            {
+                <tr>
+                    <td>@member.Name</td>
+                    <td><button class="btn btn-primary" @onclick="(() => Remove(member.Id))">Remove</button></td>
+                </tr>
+            }
         </tbody>
+
     </table>
+
+    <label>Add new team member:</label>
+    <input placeholder="Member" @bind="newMember" />
+    <button class="btn btn-primary" @onclick="(() => Add())">Add</button>
 }
 
 @code {
 
-    Participant[] participants;
+    Team team;
+    string newMember;
 
     protected override async Task OnInitializedAsync()
     {
-        participants = await TeamService.Load();
-    }
-
-    public void Initialize()
-    {
-        TeamService.Initialize();
+        //team = TeamService.GetTeam(newTeam);
+        //StateHasChanged();
     }
 
     private string newTeam;
     private string checkResult;
 
+    private void Remove(int id)
+    {
+        team = TeamService.RemoveMember(team, id);
+        StateHasChanged();
+    }
+
+    private void Add()
+    {
+        team = TeamService.AddMember(team, newMember);
+        StateHasChanged();
+    }
 
     private void CheckTeam()
     {
@@ -60,11 +74,12 @@ else
         {
             if (TeamService.CheckTeamAvailability(newTeam))
             {
-                checkResult = "Available!";
+                checkResult = "Team does not exist";
             }
             else
             {
-                checkResult = "Not available";
+                team = TeamService.GetTeam(newTeam);
+                checkResult = "Team exists";
             }
             StateHasChanged();
         }

@@ -34,10 +34,33 @@ namespace ScrumBlazor.Data
 
         public Team GetTeam(string teamName)
         {
-            using (var db = new DatabaseContext())
-            {
-                return (db.Teams.Include(m => m.Members).Where(t => t.Name.Equals(teamName))).First();
-            }
+            if (string.IsNullOrEmpty(teamName)) return null;
+            using var db = new DatabaseContext();
+            return (db.Teams.Include(m => m.Members).Where(t => t.Name.Equals(teamName))).FirstOrDefault();
+        }
+
+        public Team RemoveMember(Team team, int id)
+        {
+            if (team == null) return team;
+
+            using var db = new DatabaseContext();
+            Member memberToRemove = db.Teams.Include(m => m.Members).First(t => t.Id.Equals(team.Id)).Members
+                .First(m => m.TeamId == team.Id && m.Id == id);
+            db.Teams.Include(m => m.Members).First(t => t.Id.Equals(team.Id)).Members.Remove(memberToRemove);
+            db.SaveChanges();
+
+            return GetTeam(team.Name);
+        }
+
+        public Team AddMember(Team team, string newMember)
+        {
+            if (team == null) return team;
+
+            using var db = new DatabaseContext();
+            Member m = new Member() {CreatedTime = DateTime.Now, Name = newMember, TeamId = team.Id};
+            db.Teams.Include(m => m.Members).First(t => t.Id.Equals(team.Id)).Members.Add(m);
+            db.SaveChanges();
+            return GetTeam(team.Name);
         }
 
         public bool CheckTeamAvailability(string teamName)
