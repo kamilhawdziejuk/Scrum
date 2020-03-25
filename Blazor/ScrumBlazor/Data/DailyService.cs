@@ -25,6 +25,8 @@ namespace ScrumBlazor.Data
                 }
             }
 
+            Shuffle<Participant>(list);
+
             return list.ToArray();
         }
 
@@ -51,7 +53,7 @@ namespace ScrumBlazor.Data
 
         public List<Participant> List { get; set; }
 
-        private static Random rng = new Random();
+        private static readonly Random rng = new Random();
 
         private void Shuffle<T>(IList<T> list)
         {

@@ -30,7 +30,7 @@ else
             {
                 <tr>
                     <td>@member.Name</td>
-                    <td><button class="btn btn-primary" @onclick="(() => Remove(member.Id))">Remove</button></td>
+                    <td><button class="btn btn-danger" @onclick="(() => Remove(member.Id))">Remove</button></td>
                 </tr>
             }
         </tbody>
@@ -39,7 +39,7 @@ else
 
     <label>Add new team member:</label>
     <input placeholder="Member" @bind="newMember" />
-    <button class="btn btn-primary" @onclick="(() => Add())">Add</button>
+    <button class="btn btn-success" @onclick="(() => Add())">Add</button>
 }
 
 @code {
