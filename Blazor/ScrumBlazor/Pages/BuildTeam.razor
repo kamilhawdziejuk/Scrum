@@ -4,18 +4,23 @@
 @using ScrumBlazor.Data
 @inject TeamsService TeamService
 
-<h4>Build team:</h4>
+<h4>Log in to your team:</h4>
 <br />
 
-<input placeholder="Check Team availability" @bind="newTeam" />
-<button class="btn btn-primary" @onclick="(() => CheckTeam())">Check Name</button>
+<p>
+    Team Name: <input placeholder="Your team name" @bind="newTeam" />
+    Password: <input placeholder="Your team password" @bind="newTeamPassword" /> 
+    <br/>
+    <button class="btn btn-primary" @onclick="(() => GetTeam())">Enter existing team</button>  
+    <button class="btn btn-success" @onclick="(() => CreateTeam())">Register new team</button>
+    <br/>
+</p>
 <label>@checkResult</label>
-<br/>
-<button disabled=@disabledTeamCreation class="btn btn-success" @onclick="(() => CreateTeam())">Create Team</button>
+<hr/>
 
 @if (team == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em></em></p>
 }
 else
 {
@@ -49,6 +54,7 @@ else
     string newMember;
     bool disabledTeamCreation = true;
     private string newTeam;
+    private string newTeamPassword;
     private string checkResult;
 
     protected override async Task OnInitializedAsync()
@@ -63,7 +69,30 @@ else
 
     private void CreateTeam()
     {
-        team = TeamService.CreateTeam(newTeam);
+        if (TeamService.GetTeam(newTeam) != null)
+        {
+            checkResult = "Team with a given name already exists. Please enter existing team with proper password.";
+            team = null;
+        }
+        else
+        {
+            team = TeamService.CreateTeam(newTeam, newTeamPassword);
+            checkResult = "Team created successfully!";
+        }
+        StateHasChanged();
+    }
+
+    private void GetTeam()
+    {
+        team = TeamService.GetTeam(newTeam, newTeamPassword);
+        if (team == null)
+        {
+            checkResult = "Could not log in";
+        }
+        else
+        {
+            checkResult = "Logged in successfully!";
+        }
         StateHasChanged();
     }
 

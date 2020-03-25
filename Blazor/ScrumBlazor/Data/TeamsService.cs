@@ -11,19 +11,42 @@ namespace ScrumBlazor.Data
         public TeamsService()
         {
         }
-        public Team CreateTeam(string teamName)
+        public Team CreateTeam(string teamName, string password)
         {
-            if (string.IsNullOrEmpty(teamName)) return null;
+            if (string.IsNullOrEmpty(teamName) || string.IsNullOrEmpty(password)) return null;
             using var db = new DatabaseContext();
-            var team = new Team() {Name = teamName, CreatedTime = DateTime.Now, Members  = new List<Member>()};
+
+            string hash = this.Encode(password);
+
+            var team = new Team() {Name = teamName, CreatedTime = DateTime.Now, Password = hash, Members  = new List<Member>()};
             db.Teams.Add(team);
             db.SaveChanges();
             return team;
         }
 
+        public Team GetTeam(string teamName, string password)
+        {
+            if (string.IsNullOrEmpty(teamName) || string.IsNullOrEmpty(password)) return null;
+
+            Team team = this.GetTeam(teamName);
+            if (team == null) return null;
+
+            string hash = this.Encode(password);
+            return team.Password.Equals(hash) ? team : null;
+        }
+
+
         public bool LogIn(string name, string password)
         {
             return (!CheckTeamAvailability(name));
+        }
+
+        private string Encode(string password)
+        {
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(password);
+            data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+            String hash = System.Text.Encoding.ASCII.GetString(data);
+            return hash;
         }
 
 
