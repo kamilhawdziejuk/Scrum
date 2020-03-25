@@ -6,17 +6,14 @@
 @inject DailyService DailyService
 @inject TeamsService TeamsService
 
-Team Name: <input placeholder="Team Data" @bind="teamName" />
-Password: <input placeholder="Team Data" @bind="password" /> 
-
-<button class="btn btn-primary" @onclick="(() => LogIn())">Log in</button>
+Team Name: <input placeholder="Your team name" @bind="teamName" />
+Password: <input placeholder="Your team password" @bind="password" /> 
+<br/>
 <label>@loginResult</label>
-<br />
-<br />
+<br/>
+<button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
 <hr />
-
-<h4>Daily Timer since start: @_timerSecondsCount sec.</h4>
-<br />
+<p>Daily Timer since start: @_timerSecondsCount sec.</p>
 <br />
 <h4>Daily meeting agenda:</h4>
 <br />
@@ -26,8 +23,7 @@ Password: <input placeholder="Team Data" @bind="password" />
 <br />
 3. Are there any impediments in your way?
 <hr />
-
-<h4>Team sequence generated now:</h4>
+<h4>Team members:</h4>
 <br />
 
 @if (participants == null)
@@ -58,7 +54,7 @@ else
     </table>
 
     
-    <button class="btn btn-warning" @onclick="(() => Reset())">Reset</button>
+    <button class="btn btn-warning" @onclick="(() => Reset())">Reset sequence</button>
 }
 
 @code {
@@ -92,14 +88,14 @@ else
     {
         if (TeamsService.LogIn(teamName, password))
         {
-            loginResult = "Fine";
+            loginResult = "Correct credentials";
             team = TeamsService.GetTeam(teamName);
             participants = await DailyService.GetParticipants(team);
             _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
         }
         else
         {
-            loginResult = "Incorrect";
+            loginResult = "Incorrect credentials";
             team = null;
             participants = await DailyService.GetParticipants(team);
         }
