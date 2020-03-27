@@ -1,4 +1,4 @@
-﻿@page "/fetchdata"
+﻿@page "/daily"
 
 @using System.Threading
 @using Newtonsoft.Json
@@ -8,23 +8,16 @@
 
 Team Name: <input placeholder="Your team name" @bind="teamName" />
 Password: <input placeholder="Your team password" @bind="password" type="password"/> 
-<br/>
-<label>@loginResult</label>
-<br/>
 <button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
-<hr />
-<p>Time since start: @_timerSecondsCount sec.</p>
-<br />
-<h4>Meeting agenda:</h4>
-<br />
+<label>@loginResult</label>
+<hr/>
+
 - What did you do since last daily?
 <br />
 - What will you do until the next one?
 <br />
 - Are there any impediments in your way?
 <hr />
-<h4>Team members:</h4>
-<br />
 
 @if (participants == null)
 {
@@ -32,22 +25,22 @@ Password: <input placeholder="Your team password" @bind="password" type="passwor
 }
 else
 {
-     <p>Members list:</p>
+    <h4>Team members:</h4>
     <table class="table">
         <thead>
             <tr>
+                <th>Action</th>
                 <th>User</th>
                 <th>Time elapsed</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var participant in participants)
             {
             <tr>
+                <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
                 <td>@participant.Name</td>
                 <td>@participant.Timer</td>
-                <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
             </tr>
             }
         </tbody>
@@ -55,6 +48,8 @@ else
 
     
     <button class="btn btn-warning" @onclick="(() => Reset())">Reset sequence</button>
+    <hr />
+    <p>Time since start: @_timerSecondsCount sec.</p>
 }
 
 @code {

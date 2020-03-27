@@ -29,7 +29,7 @@ namespace ScrumBlazor.Data
             if (string.IsNullOrEmpty(teamName) || string.IsNullOrEmpty(password)) return null;
 
             Team team = this.GetTeam(teamName);
-            if (team == null) return null;
+            if (team?.Password == null) return null;
 
             string hash = this.Encode(password);
             return team.Password.Equals(hash) ? team : null;
