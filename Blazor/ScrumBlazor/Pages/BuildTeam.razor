@@ -10,14 +10,10 @@
 <p>
     Team Name: <input placeholder="Your team name" @bind="newTeam" />
     Password: <input placeholder="Your team password" @bind="newTeamPassword" type="password"/> 
-    <br/> <br/>
     <button class="btn btn-primary" @onclick="(() => GetTeam())">Enter existing team</button>  
     <button class="btn btn-success" @onclick="(() => CreateTeam())">Register new team</button>
-    <br/>
-
 </p>
 <label>@checkResult</label>
-<hr/>
 
 @if (team == null)
 {
