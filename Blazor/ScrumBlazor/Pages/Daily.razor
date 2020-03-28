@@ -1,53 +1,51 @@
 ﻿@page "/daily"
 
 @using System.Threading
-@using Newtonsoft.Json
 @using ScrumBlazor.Data
 @inject DailyService DailyService
 @inject TeamsService TeamsService
-
-Team Name: <input placeholder="Your team name" @bind="teamName" />
-Password: <input placeholder="Your team password" @bind="password" type="password"/> 
+Team Name:
+<input placeholder="Your team name" @bind="teamName" />
+Password:
+<input placeholder="Your team password" @bind="password" type="password" />
 <button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
 <label>@loginResult</label>
-<hr/>
-
-- What did you do since last daily?
-<br />
-- What will you do until the next one?
-<br />
-- Are there any impediments in your way?
 <hr />
-
+<h5>Daily meeting agenda:</h5>
+1. What did you do  yesterday / since last daily? <br/>
+2. What will you do until the next one? <br/>
+3. Are there any impediments in your way?
+<hr />
 @if (participants == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <h4>Team members:</h4>
     <table class="table">
         <thead>
             <tr>
                 <th>Action</th>
-                <th>User</th>
+                <th>Team member</th>
                 <th>Time elapsed</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var participant in participants)
             {
-            <tr>
-                <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
-                <td>@participant.Name</td>
-                <td>@participant.Timer</td>
-            </tr>
+                <tr>
+                    <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
+                    <td>@participant.Name</td>
+                    <td>@participant.Timer</td>
+                </tr>
             }
         </tbody>
     </table>
 
-    
+
     <button class="btn btn-warning" @onclick="(() => Reset())">Reset sequence</button>
+    
+    <button class="btn btn-primary" @onclick="(() => Save())">Stop meeting and Save</button>
     <hr />
     <p>Time since start: @_timerSecondsCount sec.</p>
 }
@@ -57,7 +55,6 @@ else
     string teamName;
     string password;
     string loginResult;
-
     Team team;
 
     Participant[] participants;
@@ -77,6 +74,15 @@ else
     public void LoadTeam()
     {
         team = TeamsService.GetTeam(teamName);
+    }
+
+    public async Task Save()
+    {
+        if (team != null)
+        {
+            await _updateTimer.DisposeAsync();
+            await TeamsService.Save(participants, team);
+        }
     }
 
     public async Task LogIn()

@@ -19,7 +19,8 @@ namespace ScrumBlazor.Data
                     {
                         Name = team.Members[i].Name,
                         Nr = i,
-                        Timer = 0
+                        Timer = 0,
+                        Id = team.Members[i].Id,
                     };
                     list.Add(p);
                 }
@@ -35,19 +36,6 @@ namespace ScrumBlazor.Data
             return list.ToArray();
         }
 
-        private List<Participant> ReadParticipantsFromFile()
-        {
-            var list = new List<Participant>();
-            using (StreamReader sr = new StreamReader("participants.txt"))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    list.Add(new Participant() { Name = line, Timer = 0 });
-                }
-            }
-            return list;
-        }
 
         [HttpGet("[action]")]
         public IEnumerable<Participant> RandomizeParticipants()

@@ -25,14 +25,17 @@ else
         <thead>
             <tr>
                 <th>User Name</th>
+                <th>Avarage Time</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var member in team.Members)
             {
+                var val = @member.DailyAmount == 0 ? 0 : @member.SummaryTime / @member.DailyAmount;
                 <tr>
                     <td>@member.Name</td>
+                    <td>@val</td>
                     <td><button class="btn btn-danger" @onclick="(() => Remove(member.Id))">Remove</button></td>
                 </tr>
             }
@@ -58,7 +61,7 @@ else
     {
     }
 
-    private void Remove(int id)
+    private void Remove(Guid id)
     {
         team = TeamService.RemoveMember(team, id);
         StateHasChanged();
@@ -100,7 +103,7 @@ else
 
     private void Add()
     {
-        team = TeamService.AddMember(team, newMember);
+        team = TeamService.AddMember(team.Id, newMember);
         StateHasChanged();
     }
 

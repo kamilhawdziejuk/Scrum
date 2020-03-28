@@ -15,7 +15,8 @@ namespace ScrumBlazor.Migrations
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     TaskName = table.Column<string>(nullable: true),
-                    CreatedTime = table.Column<DateTime>(nullable: false)
+                    CreatedTime = table.Column<DateTime>(nullable: false),
+                    DailyAmount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,12 +27,13 @@ namespace ScrumBlazor.Migrations
                 name: "Members",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<Guid>(nullable: false),
                     TeamId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     CreatedTime = table.Column<DateTime>(nullable: false),
-                    StoryPoint = table.Column<double>(nullable: false)
+                    StoryPoint = table.Column<double>(nullable: false),
+                    SummaryTime = table.Column<int>(nullable: false),
+                    DailyAmount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

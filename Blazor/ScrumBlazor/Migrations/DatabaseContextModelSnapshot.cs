@@ -18,18 +18,24 @@ namespace ScrumBlazor.Migrations
 
             modelBuilder.Entity("ScrumBlazor.Data.Member", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("DailyAmount")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("StoryPoint")
                         .HasColumnType("REAL");
+
+                    b.Property<int>("SummaryTime")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("TeamId")
                         .HasColumnType("TEXT");
@@ -49,6 +55,9 @@ namespace ScrumBlazor.Migrations
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("DailyAmount")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");

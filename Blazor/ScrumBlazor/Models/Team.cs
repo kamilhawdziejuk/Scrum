@@ -19,6 +19,8 @@ namespace ScrumBlazor.Data
 
         public DateTime CreatedTime { get; set; }
 
+        public int DailyAmount { get; set; }
+
         public override string ToString()
         {
             return Name;
