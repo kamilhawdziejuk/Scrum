@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--<rewrite>
+<rewrite>
   <rules>
     <rule name="CanonicalHostNameRule">
       <match url="(.*)" />
@@ -9,4 +9,4 @@
       <action type="Redirect" url="http://www.enterscrum.com/{R:1}" />
     </rule>
   </rules>
-</rewrite>-->
+</rewrite>
