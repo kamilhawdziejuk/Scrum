@@ -4,50 +4,52 @@
 @using ScrumBlazor.Data
 @inject DailyService DailyService
 @inject TeamsService TeamsService
+<h4>Start Daily meeting:</h4>
 Team Name:
 <input placeholder="Your team name" @bind="teamName" />
 Password:
 <input placeholder="Your team password" @bind="password" type="password" />
 <button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
 <label>@loginResult</label>
-<hr />
-<h5>Daily meeting agenda:</h5>
-1. What did you do  yesterday / since last daily? <br/>
-2. What will you do until the next one? <br/>
-3. Are there any impediments in your way?
-<hr />
+<hr/>
+- What did you do  yesterday / since last daily?
+<br />
+- What will you do until the next one?
+<br />
+- Are there any impediments in your way?
+<br/>
 @if (participants == null)
 {
-    <p><em>Loading...</em></p>
+<p><em></em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Action</th>
-                <th>Team member</th>
-                <th>Time elapsed</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var participant in participants)
+<table class="table">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Team member</th>
+            <th>Time elapsed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var participant in participants)
             {
-                <tr>
-                    <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
-                    <td>@participant.Name</td>
-                    <td>@participant.Timer</td>
-                </tr>
+        <tr>
+            <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
+            <td>@participant.Name</td>
+            <td>@participant.Timer</td>
+        </tr>
             }
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
 
-    <button class="btn btn-warning" @onclick="(() => Reset())">Reset sequence</button>
-    
-    <button class="btn btn-primary" @onclick="(() => Save())">Stop meeting and Save</button>
-    <hr />
-    <p>Time since start: @_timerSecondsCount sec.</p>
+<button class="btn btn-warning" @onclick="(() => Reset())">Reset sequence</button>
+
+<button class="btn btn-primary" @onclick="(() => Save())">Stop meeting and Save</button>
+<hr />
+<p>Time since start: @_timerSecondsCount sec.</p>
 }
 
 @code {

@@ -104,6 +104,14 @@ namespace ScrumBlazor.Data
             return GetTeam(team.Name);
         }
 
+        public bool CheckMemberAvailability(Guid teamId, string newMember)
+        {
+            if (teamId == Guid.Empty || string.IsNullOrWhiteSpace(newMember)) return false;
+            using var db = new DatabaseContext();
+            if (!db.Members.Any(m => m.TeamId.Equals(teamId) && m.Name.Equals(newMember))) return true;
+            return false;
+        }
+
         public bool CheckTeamAvailability(string teamName)
         {
             using var db = new DatabaseContext();

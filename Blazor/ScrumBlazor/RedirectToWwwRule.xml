@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--<rewrite>
+  <rules>
+    <rule name="CanonicalHostNameRule">
+      <match url="(.*)" />
+      <conditions>
+        <add input="{HTTP_HOST}" pattern="^www\.enterscrum\.com$" negate="true" />
+      </conditions>
+      <action type="Redirect" url="http://www.enterscrum.com/{R:1}" />
+    </rule>
+  </rules>
+</rewrite>-->

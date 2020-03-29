@@ -4,7 +4,7 @@
 @using ScrumBlazor.Data
 @inject TeamsService TeamService
 
-<h4>Log in to your team:</h4>
+<h4>Maintain team:</h4>
 <br />
 
 <p>
@@ -14,6 +14,8 @@
     <button class="btn btn-success" @onclick="(() => CreateTeam())">Register new team</button>
 </p>
 <label>@checkResult</label>
+<br/>
+Add and remove team members. See the statistics from your meetings.
 
 @if (team == null)
 {
@@ -46,6 +48,7 @@ else
     <label>Add new team member:</label>
     <input placeholder="Member" @bind="newMember" />
     <button class="btn btn-success" @onclick="(() => Add())">Add member</button>
+    <label>@addingResult</label>
 }
 
 @code {
@@ -56,6 +59,7 @@ else
     private string newTeam;
     private string newTeamPassword;
     private string checkResult;
+    private string addingResult;
 
     protected override async Task OnInitializedAsync()
     {
@@ -103,7 +107,14 @@ else
 
     private void Add()
     {
-        team = TeamService.AddMember(team.Id, newMember);
+        if (TeamService.CheckMemberAvailability(team.Id, newMember))
+        {
+            team = TeamService.AddMember(team.Id, newMember);
+        }
+        else
+        {
+            addingResult = "Member was not added. Please choose name that do not exist";
+        }
         StateHasChanged();
     }
 
