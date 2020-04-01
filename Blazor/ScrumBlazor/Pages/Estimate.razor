@@ -23,9 +23,10 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Action</th>
+                <th>Starting</th>
                 <th>Team member</th>
                 <th>Estimation</th>
+                <th>Saving</th>
             </tr>
         </thead>
         <tbody>
@@ -35,13 +36,15 @@ else
                     <td><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
                     <td>@participant.Name</td>
                     <td><input placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
+                    <td><button class="btn btn-primary" @onclick="(() => Save())">Save estimate</button></td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <button class="btn btn-primary" @onclick="(() => Save())">Save estimates</button>
     <button class="btn btn-warning" @onclick="(() => Reset())">Reset estimates</button>
+    <button class="btn btn-info" @onclick="(() => Get())">Get estimates</button>
+
     <hr />
     <p>Time since start: @_timerSecondsCount sec.</p>
 }
@@ -94,6 +97,23 @@ else
         StateHasChanged();
     }
 
+    public async Task Get()
+    {
+        team = TeamsService.GetTeam(teamName, password);
+        if (team != null)
+        {
+            loginResult = "Correct credentials";
+            participants = await DailyService.GetParticipants(team);
+            //_updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
+        }
+        else
+        {
+            loginResult = "Wrong credentials";
+            participants = null;
+        }
+        StateHasChanged();
+    }
+
     public async void Reset()
     {
         participants = await DailyService.GetParticipants(team);
@@ -102,6 +122,8 @@ else
             participants[i].Timer = 0;
             participants[i].Estimation = Participant.NotEstimated;
         }
+
+        await TeamsService.Save(participants, team);
 
         _currentUserNr = -1;
     }
