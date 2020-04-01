@@ -21,7 +21,17 @@ namespace ScrumBlazor.Data
         public string EstimationStr
         {
             get { return Disabled ? "Not Estimated" : this.Estimation.ToString(); }
-            set { }
+            set
+            {
+                try
+                {
+                    this.Estimation = Convert.ToDouble(value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
     }
 }

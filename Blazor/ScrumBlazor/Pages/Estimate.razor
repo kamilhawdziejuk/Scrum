@@ -34,13 +34,14 @@ else
                 <tr>
                     <td><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
                     <td>@participant.Name</td>
-                    <td><input  placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled"/></td>
+                    <td><input placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <button class="btn btn-primary" @onclick="(() => Save())">Save estimation</button>
+    <button class="btn btn-primary" @onclick="(() => Save())">Save estimates</button>
+    <button class="btn btn-warning" @onclick="(() => Reset())">Reset estimates</button>
     <hr />
     <p>Time since start: @_timerSecondsCount sec.</p>
 }
@@ -99,6 +100,7 @@ else
         for (int i = 0; i < participants.Length; i++)
         {
             participants[i].Timer = 0;
+            participants[i].Estimation = Participant.NotEstimated;
         }
 
         _currentUserNr = -1;
