@@ -12,14 +12,13 @@ Password:
 <button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
 <label>@loginResult</label>
 <hr />
-Let's estimate:
-<br />
 @if (participants == null)
 {
     <p><em></em></p>
 }
 else
 {
+    <label>Join the session and save your estimates to see other members estimation!</label>
     <table class="table">
         <thead>
             <tr>
@@ -36,14 +35,15 @@ else
                     <td><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
                     <td>@participant.Name</td>
                     <td><input placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
-                    <td><button class="btn btn-primary" @onclick="(() => Save())">Save estimate</button></td>
+                    <td><button class="btn btn-info" @onclick="(() => Save())">Save and refresh</button></td>
                 </tr>
             }
         </tbody>
     </table>
 
     <button class="btn btn-warning" @onclick="(() => Reset())">Reset estimates</button>
-    <button class="btn btn-info" @onclick="(() => Get())">Get estimates</button>
+    @*<button class="btn btn-info" @onclick="(() => Get())">Get estimates</button>*@
+    <br/>
 
     <hr />
     <p>Time since start: @_timerSecondsCount sec.</p>
@@ -74,8 +74,11 @@ else
     {
         if (team != null)
         {
-            await _updateTimer.DisposeAsync();
+            //await _updateTimer.DisposeAsync();
             await TeamsService.Save(participants[_currentUserNr], team);
+            team = TeamsService.GetTeam(teamName, password);
+            participants = await DailyService.GetParticipants(team);
+            StateHasChanged();
         }
     }
 
@@ -87,6 +90,10 @@ else
         {
             loginResult = "Correct credentials";
             participants = await DailyService.GetParticipants(team);
+            foreach (var p in participants)
+            {
+                p.Estimation = Participant.NotEstimated;
+            }
             _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
         }
         else
