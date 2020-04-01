@@ -8,5 +8,7 @@ namespace ScrumBlazor.Data
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int Timer { get; set; }
+
+        public double Estimation { get; set; }
     }
 }

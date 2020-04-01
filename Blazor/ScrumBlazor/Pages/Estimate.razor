@@ -1,0 +1,125 @@
+﻿@page "/estimate"
+
+@using System.Threading
+@using ScrumBlazor.Data
+@inject DailyService DailyService
+@inject TeamsService TeamsService
+<h4>Start Estimation meeting:</h4>
+Team Name:
+<input placeholder="Your team name" @bind="teamName" />
+Password:
+<input placeholder="Your team password" @bind="password" type="password" />
+<button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
+<label>@loginResult</label>
+<hr />
+Let's estimate:
+<br />
+@if (participants == null)
+{
+    <p><em>@loadingParticipants</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Team member</th>
+                <th>Estimation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var participant in participants)
+            {
+                <tr>
+                    <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Join</button></td>
+                    <td>@participant.Name</td>
+                    <td><input/></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" @onclick="(() => Save())">Save estimation</button>
+    <hr />
+    <p>Time since start: @_timerSecondsCount sec.</p>
+}
+
+@code {
+
+    string teamName;
+    string password;
+    string loginResult;
+    Team team;
+    string loadingParticipants;
+
+    Participant[] participants;
+    int _currentUserNr = -1;
+    Timer _updateTimer;
+    int _timerSecondsCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    public void Dispose()
+    {
+        _updateTimer.Dispose();
+    }
+
+    public async Task Save()
+    {
+        if (team != null)
+        {
+            await _updateTimer.DisposeAsync();
+            await TeamsService.Save(participants, team);
+        }
+    }
+
+    public async Task LogIn()
+    {
+        loadingParticipants = "Loading...";
+        StateHasChanged();
+        team = TeamsService.GetTeam(teamName, password);
+        if (team != null)
+        {
+            loginResult = "Correct credentials";
+            participants = await DailyService.GetParticipants(team);
+            _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
+        }
+        else
+        {
+            loginResult = "Wrong credentials";
+            participants = null;
+        }
+        loadingParticipants = "";
+        StateHasChanged();
+    }
+
+    public async void Reset()
+    {
+        participants = await DailyService.GetParticipants(team);
+        for (int i = 0; i < participants.Length; i++)
+        {
+            participants[i].Timer = 0;
+        }
+
+        _currentUserNr = -1;
+    }
+
+    void ChangeCurrentUser(int userNrClicked)
+    {
+        _currentUserNr = userNrClicked;
+    }
+
+    async Task UpdateCounter()
+    {
+        _timerSecondsCount++;
+        if (this._currentUserNr >= 0)
+        {
+            participants[_currentUserNr].Timer++;
+        }
+        StateHasChanged();
+    }
+
+}

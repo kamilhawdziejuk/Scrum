@@ -14,12 +14,14 @@ namespace ScrumBlazor.Data
             {
                 for (int i = 0; i < team.Members.Count; i++)
                 {
+                    Member member = team.Members[i];
                     Participant p = new Participant()
                     {
-                        Name = team.Members[i].Name,
+                        Name = member.Name,
                         Nr = i,
                         Timer = 0,
-                        Id = team.Members[i].Id,
+                        Id = member.Id,
+                        Estimation = member.StoryPoint
                     };
                     list.Add(p);
                 }
