@@ -48,6 +48,22 @@ namespace ScrumBlazor.Data
             return hash;
         }
 
+        public async Task Save(Participant participant, Team team)
+        {
+            if (team == null) return;
+
+            await using var db = new DatabaseContext();
+            var members = db.Members;
+
+            var member = members.FirstOrDefault(m => m.Id.Equals(participant.Id));
+            if (member != null)
+            {
+                member.StoryPoint = participant.Estimation;
+            }
+
+            db.SaveChanges();
+        }
+
         public async Task Save(Participant[] participants, Team team)
         {
             if (team == null) return;
@@ -70,7 +86,6 @@ namespace ScrumBlazor.Data
 
             db.Teams.First(t => t.Id.Equals(team.Id)).DailyAmount += 1;
             db.SaveChanges();
-
         }
 
         public Team GetTeam(string teamName)

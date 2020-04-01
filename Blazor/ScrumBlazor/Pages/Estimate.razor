@@ -4,7 +4,7 @@
 @using ScrumBlazor.Data
 @inject DailyService DailyService
 @inject TeamsService TeamsService
-<h4>Start Estimation meeting:</h4>
+<h4>Estimation meeting:</h4>
 Team Name:
 <input placeholder="Your team name" @bind="teamName" />
 Password:
@@ -72,7 +72,7 @@ else
         if (team != null)
         {
             await _updateTimer.DisposeAsync();
-            await TeamsService.Save(participants, team);
+            await TeamsService.Save(participants[_currentUserNr], team);
         }
     }
 
