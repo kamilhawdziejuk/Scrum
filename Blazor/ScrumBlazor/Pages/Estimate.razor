@@ -16,7 +16,7 @@ Let's estimate:
 <br />
 @if (participants == null)
 {
-    <p><em>@loadingParticipants</em></p>
+    <p><em></em></p>
 }
 else
 {
@@ -32,9 +32,9 @@ else
             @foreach (var participant in participants)
             {
                 <tr>
-                    <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Join</button></td>
+                    <td><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
                     <td>@participant.Name</td>
-                    <td><input/></td>
+                    <td><input  placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled"/></td>
                 </tr>
             }
         </tbody>
@@ -51,7 +51,6 @@ else
     string password;
     string loginResult;
     Team team;
-    string loadingParticipants;
 
     Participant[] participants;
     int _currentUserNr = -1;
@@ -78,7 +77,6 @@ else
 
     public async Task LogIn()
     {
-        loadingParticipants = "Loading...";
         StateHasChanged();
         team = TeamsService.GetTeam(teamName, password);
         if (team != null)
@@ -92,7 +90,6 @@ else
             loginResult = "Wrong credentials";
             participants = null;
         }
-        loadingParticipants = "";
         StateHasChanged();
     }
 
@@ -107,9 +104,11 @@ else
         _currentUserNr = -1;
     }
 
-    void ChangeCurrentUser(int userNrClicked)
+    void SetCurrentUser(int userNrClicked)
     {
         _currentUserNr = userNrClicked;
+        this.participants[userNrClicked].Estimation = 0;
+        StateHasChanged();
     }
 
     async Task UpdateCounter()

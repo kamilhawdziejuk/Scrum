@@ -53,13 +53,14 @@ namespace ScrumBlazor.Data
             if (team == null) return;
 
             await using var db = new DatabaseContext();
-            var members = db.Members.ToList();
+            var members = db.Members;
             foreach (var p in participants)
             {
                 var member = members.FirstOrDefault(m => m.Id.Equals(p.Id));
                 if (member != null)
                 {
                     member.SummaryTime += p.Timer;
+                    member.StoryPoint = p.Estimation;
                     if (p.Timer > 0)
                     {
                         member.DailyAmount += 1;
@@ -69,6 +70,7 @@ namespace ScrumBlazor.Data
 
             db.Teams.First(t => t.Id.Equals(team.Id)).DailyAmount += 1;
             db.SaveChanges();
+
         }
 
         public Team GetTeam(string teamName)

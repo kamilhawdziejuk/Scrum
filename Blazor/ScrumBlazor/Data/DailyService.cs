@@ -10,12 +10,12 @@ namespace ScrumBlazor.Data
         public async Task<Participant[]> GetParticipants(Team team)
         {
             var list = new List<Participant>();
-            if (team != null && team.Members != null && team.Members.Count > 0)
+            if (team?.Members != null && team.Members.Count > 0)
             {
                 for (int i = 0; i < team.Members.Count; i++)
                 {
                     Member member = team.Members[i];
-                    Participant p = new Participant()
+                    var p = new Participant()
                     {
                         Name = member.Name,
                         Nr = i,
