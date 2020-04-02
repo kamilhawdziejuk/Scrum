@@ -35,11 +35,11 @@ else
     <tbody>
         @foreach (var participant in participants)
             {
-        <tr>
-            <td><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
-            <td>@participant.Name</td>
-            <td>@participant.Timer</td>
-        </tr>
+            <tr>
+                <td class="@getClass(participant.Nr)"><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
+                <td class="@getClass(participant.Nr)">@participant.Name</td>
+                <td class="@getClass(participant.Nr)">@participant.Timer</td>
+            </tr>
             }
     </tbody>
 </table>
@@ -63,6 +63,11 @@ else
     int _currentUserNr = -1;
     Timer _updateTimer;
     int _timerSecondsCount = 0;
+
+    public string getClass(int participantNr)
+    {
+        return (participantNr == _currentUserNr) ? "table-active" : "table-light";
+    }
 
     protected override async Task OnInitializedAsync()
     {

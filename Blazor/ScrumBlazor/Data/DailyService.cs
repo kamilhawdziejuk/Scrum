@@ -7,7 +7,7 @@ namespace ScrumBlazor.Data
 {
     public class DailyService
     {
-        public async Task<Participant[]> GetParticipants(Team team)
+        public async Task<Participant[]> GetParticipants(Team team, bool shuffle = true)
         {
             var list = new List<Participant>();
             if (team?.Members != null && team.Members.Count > 0)
@@ -26,8 +26,11 @@ namespace ScrumBlazor.Data
                     list.Add(p);
                 }
 
-                Shuffle<Participant>(list);
-
+                if (shuffle)
+                {
+                    Shuffle<Participant>(list);
+                }
+                
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].Nr = i;

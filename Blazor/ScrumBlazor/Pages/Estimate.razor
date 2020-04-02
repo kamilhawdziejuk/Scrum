@@ -32,17 +32,16 @@ else
             @foreach (var participant in participants)
             {
                 <tr>
-                    <td><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
-                    <td>@participant.Name</td>
-                    <td><input placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
-                    <td><button class="btn btn-info" @onclick="(() => Save())">Save and refresh</button></td>
+                    <td class="@getClass(participant.Nr)"><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
+                    <td class="@getClass(participant.Nr)">@participant.Name</td>
+                    <td class="@getClass(participant.Nr)"><input placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
+                    <td class="@getClass(participant.Nr)"><button class="btn btn-info" @onclick="(() => Save())">Save and refresh</button></td>
                 </tr>
             }
         </tbody>
     </table>
 
     <button class="btn btn-warning" @onclick="(() => Reset())">Reset estimates</button>
-    @*<button class="btn btn-info" @onclick="(() => Get())">Get estimates</button>*@
     <br/>
 
     <hr />
@@ -61,6 +60,11 @@ else
     Timer _updateTimer;
     int _timerSecondsCount = 0;
 
+    public string getClass(int participantNr)
+    {
+        return (participantNr == _currentUserNr) ? "table-active" : "table-light";
+    }
+
     protected override async Task OnInitializedAsync()
     {
     }
@@ -74,10 +78,9 @@ else
     {
         if (team != null)
         {
-            //await _updateTimer.DisposeAsync();
             await TeamsService.Save(participants[_currentUserNr], team);
             team = TeamsService.GetTeam(teamName, password);
-            participants = await DailyService.GetParticipants(team);
+            participants = await DailyService.GetParticipants(team,false);
             StateHasChanged();
         }
     }
@@ -89,7 +92,7 @@ else
         if (team != null)
         {
             loginResult = "Correct credentials";
-            participants = await DailyService.GetParticipants(team);
+            participants = await DailyService.GetParticipants(team, false);
             foreach (var p in participants)
             {
                 p.Estimation = Participant.NotEstimated;
@@ -111,7 +114,6 @@ else
         {
             loginResult = "Correct credentials";
             participants = await DailyService.GetParticipants(team);
-            //_updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
         }
         else
         {
@@ -123,11 +125,11 @@ else
 
     public async void Reset()
     {
-        participants = await DailyService.GetParticipants(team);
-        for (int i = 0; i < participants.Length; i++)
+        participants = await DailyService.GetParticipants(team, false);
+        foreach (var p in participants)
         {
-            participants[i].Timer = 0;
-            participants[i].Estimation = Participant.NotEstimated;
+            p.Timer = 0;
+            p.Estimation = Participant.NotEstimated;
         }
 
         await TeamsService.Save(participants, team);
