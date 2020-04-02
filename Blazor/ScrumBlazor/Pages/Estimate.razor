@@ -34,7 +34,7 @@ else
                 <tr>
                     <td class="@getClass(participant.Nr)"><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
                     <td class="@getClass(participant.Nr)">@participant.Name</td>
-                    <td class="@getClass(participant.Nr)"><input size="9" placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
+                    <td class="@getClass(participant.Nr)"><input size="11" placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
                     <td class="@getClass(participant.Nr)"><button class="btn btn-info" @onclick="(() => Save())">Save and refresh</button></td>
                 </tr>
             }
