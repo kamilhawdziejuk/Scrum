@@ -12,19 +12,17 @@ Password:
 <button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
 <label>@loginResult</label>
 <hr/>
-- What did you do  yesterday / since last daily?
-<br />
-- What will you do until the next one?
-<br />
-- Are there any impediments in your way?
-<br/>
+        <label>Join the session to generate team members sequence. Share your screen and start meeting agenda:</label><br/>
+        <label>- What did you do  yesterday / since last daily?</label><br />
+        <label>- What will you do until the next one?</label><br />
+        <label>- Are there any impediments in your way?</label><br />
+
 @if (participants == null)
 {
-<p><em></em></p>
 }
 else
 {
-<table class="table">
+    <table class="table">
     <thead>
         <tr>
             <th>Action</th>
@@ -35,11 +33,11 @@ else
     <tbody>
         @foreach (var participant in participants)
             {
-            <tr>
-                <td class="@getClass(participant.Nr)"><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
-                <td class="@getClass(participant.Nr)">@participant.Name</td>
-                <td class="@getClass(participant.Nr)">@participant.Timer</td>
-            </tr>
+        <tr>
+            <td class="@getClass(participant.Nr)"><button class="btn btn-primary" @onclick="(() => ChangeCurrentUser(participant.Nr))">Start</button></td>
+            <td class="@getClass(participant.Nr)">@participant.Name</td>
+            <td class="@getClass(participant.Nr)">@participant.Timer</td>
+        </tr>
             }
     </tbody>
 </table>
