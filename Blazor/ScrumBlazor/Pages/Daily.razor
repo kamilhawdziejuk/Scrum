@@ -98,6 +98,7 @@ else
             loginResult = "Correct credentials";
             participants = await DailyService.GetParticipants(team);
             _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
+            await TeamsService.SaveLoginTimeAmount(team.Id);
         }
         else
         {

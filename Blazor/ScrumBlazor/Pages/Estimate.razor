@@ -98,6 +98,7 @@ else
                 p.Estimation = Participant.NotEstimated;
             }
             _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
+            await TeamsService.SaveLoginTimeAmount(team.Id);
         }
         else
         {

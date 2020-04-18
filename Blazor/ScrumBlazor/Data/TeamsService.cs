@@ -29,6 +29,20 @@ namespace ScrumBlazor.Data
             return team;
         }
 
+        public async Task SaveLoginTimeAmount(Guid teamId)
+        {
+            if (teamId == Guid.Empty) return;
+            await using var db = new DatabaseContext();
+            var teams = db.Teams;
+            var team = teams.FirstOrDefault(t => t.Id.Equals(teamId));
+            if (team != null)
+            {
+                team.LoginAmount++;
+                team.LoginTime = DateTime.Now;
+            }
+            db.SaveChanges();
+        }
+
         public Team GetTeam(string teamName, string password)
         {
             if (string.IsNullOrEmpty(teamName) || string.IsNullOrEmpty(password)) return null;
