@@ -12,13 +12,22 @@ Password:
 <button class="btn btn-primary" @onclick="(() => LogIn())">Enter team</button>
 <label>@loginResult</label>
 <hr />
+<label>Join session and save your estimate to see other members estimations!</label>
+<br/>
+<p><strong>What to consideration during estimation (acceptance criteria checklist):</strong><br/>
+- complexity (how many components does this change affect? frontend/backend/DB etc.) <br/>
+- unit tests involved? <br/>
+- integration tests involved? <br/>
+- translations changes involved? <br/>
+- build scripts changes involved? <br/>
+- documentation updates involved? <br/>
+etc.
+</p>
 @if (participants == null)
 {
-    <label>Join the session and save your estimate to see other members estimations!</label>
 }
 else
 {
-    <label>Join the session and save your estimate to see other members estimations!</label>
     <table class="table">
         <thead>
             <tr>
