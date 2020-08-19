@@ -21,7 +21,8 @@ namespace ScrumBlazor.Data
                         Nr = i,
                         Timer = 0,
                         Id = member.Id,
-                        Estimation = member.StoryPoint
+                        Estimation = member.StoryPoint,
+                        Estimate = member.Estimate
                     };
                     list.Add(p);
                 }

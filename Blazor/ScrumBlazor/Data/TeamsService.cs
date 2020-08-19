@@ -73,6 +73,7 @@ namespace ScrumBlazor.Data
             if (member != null)
             {
                 member.StoryPoint = participant.Estimation;
+                member.Estimate = participant.Estimate;
             }
 
             db.SaveChanges();
@@ -91,6 +92,7 @@ namespace ScrumBlazor.Data
                 {
                     member.SummaryTime += p.Timer;
                     member.StoryPoint = p.Estimation;
+                    member.Estimate = p.Estimate;
                     if (p.Timer > 0)
                     {
                         member.DailyAmount += 1;

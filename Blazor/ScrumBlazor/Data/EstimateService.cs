@@ -16,6 +16,7 @@ namespace ScrumBlazor.Data
             if (member != null)
             {
                 member.StoryPoint = participant.Estimation;
+                member.Estimate = participant.Estimate;
             }
 
             db.SaveChanges();

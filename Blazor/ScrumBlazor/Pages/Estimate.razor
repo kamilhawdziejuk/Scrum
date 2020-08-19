@@ -4,7 +4,7 @@
 @using ScrumBlazor.Data
 @inject DailyService DailyService
 @inject TeamsService TeamsService
-<h4>Poker planning meeting:</h4>
+<h4>Poker planning / PI voting meeting:</h4>
 Team Name:
 <input placeholder="Your team name" @bind="teamName" />
 Password:
@@ -43,7 +43,7 @@ else
                 <tr>
                     <td class="@getClass(participant.Nr)"><button class="btn btn-success" @onclick="(() => SetCurrentUser(participant.Nr))">Join</button></td>
                     <td class="@getClass(participant.Nr)">@participant.Name</td>
-                    <td class="@getClass(participant.Nr)"><input size="11" placeholder="Estimation" @bind="@participant.EstimationStr" disabled="@participant.Disabled" /></td>
+                    <td class="@getClass(participant.Nr)"><input size="11" placeholder="Estimate" @bind="@participant.Estimate" disabled="@participant.Disabled" /></td>
                     <td class="@getClass(participant.Nr)"><button class="btn btn-info" @onclick="(() => Save())">Save and refresh</button></td>
                 </tr>
             }
@@ -140,6 +140,7 @@ else
         {
             p.Timer = 0;
             p.Estimation = Participant.NotEstimated;
+            p.Estimate = "Not ready";
         }
 
         await TeamsService.Save(participants, team);
@@ -151,6 +152,7 @@ else
     {
         _currentUserNr = userNrClicked;
         this.participants[userNrClicked].Estimation = 0;
+        this.participants[userNrClicked].Estimate = "";
         StateHasChanged();
     }
 

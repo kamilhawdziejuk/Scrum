@@ -13,6 +13,8 @@ namespace ScrumBlazor.Data
         public DateTime CreatedTime { get; set; }
         public double StoryPoint { get; set; }
 
+        public string Estimate { get; set; }
+
         public int SummaryTime { get; set; }
 
         public int DailyAmount { get; set; }

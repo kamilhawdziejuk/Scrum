@@ -13,6 +13,8 @@ namespace ScrumBlazor.Data
 
         public double Estimation { get; set; }
 
+        public string Estimate { get; set; }
+
         public bool Disabled
         {
             get { return this.Estimation.Equals(NotEstimated); }
