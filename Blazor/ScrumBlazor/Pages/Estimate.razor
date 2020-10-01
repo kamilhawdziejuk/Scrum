@@ -113,6 +113,7 @@ else
             foreach (var p in participants)
             {
                 p.Joined = false;
+                p.Estimate = "Not ready";
             }
             _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
             await TeamsService.SaveLoginTimeAmount(team.Id);
