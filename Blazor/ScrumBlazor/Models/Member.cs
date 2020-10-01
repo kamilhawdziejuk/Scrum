@@ -11,6 +11,10 @@ namespace ScrumBlazor.Data
         public Guid TeamId { get; set; }
         public string Name { get; set; }
         public DateTime CreatedTime { get; set; }
+
+        /// <summary>
+        /// Used for reserving estimation session (1=joined, 0=NOT joined)
+        /// </summary>
         public double StoryPoint { get; set; }
 
         public string Estimate { get; set; }

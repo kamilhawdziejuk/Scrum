@@ -72,7 +72,7 @@ namespace ScrumBlazor.Data
             var member = members.FirstOrDefault(m => m.Id.Equals(participant.Id));
             if (member != null)
             {
-                member.StoryPoint = participant.Estimation;
+                member.StoryPoint = participant.Joined ? 1 : 0;
                 member.Estimate = participant.Estimate;
             }
 
@@ -91,7 +91,7 @@ namespace ScrumBlazor.Data
                 if (member != null)
                 {
                     member.SummaryTime += p.Timer;
-                    member.StoryPoint = p.Estimation;
+                    member.StoryPoint = p.Joined ? 1 : 0;
                     member.Estimate = p.Estimate;
                     if (p.Timer > 0)
                     {

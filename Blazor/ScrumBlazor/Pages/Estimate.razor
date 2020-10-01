@@ -13,19 +13,22 @@ Password:
 <label>@loginResult</label>
 <hr />
 <label>Join session and save your estimate to see other members estimations!</label>
-<br/>
-<p><strong>What to consider when estimating (acceptance criteria checklist):</strong><br/>
-- complexity (how many components does this change affect? frontend/backend/DB etc.) <br/>
-- unit tests involved? <br/>
-- integration tests involved? <br/>
-- translations changes involved? <br/>
-- build scripts/CI changes involved? <br/>
-- documentation updates involved? <br/>
-etc.<br />
-
-<strong>Estimation values:</strong><br/>
-- Story points (0, 0.5, 1, 2, 3, 5, 8, 13, 21, 34, 55, 100, ?) <br/>
-- Fist of Five (0, 1, 2, 3, 4, 5) <br/>
+<br />
+<strong>Estimation values propositions:</strong>
+<br />
+- Story points (0, 0.5, 1, 2, 3, 5, 8, 13, 21, 34, 55, 100, ?)
+<br />
+- Fist of Five (0, 1, 2, 3, 4, 5)
+<br />
+<p>
+    <strong>What to consider when estimating during Sprint Planning (acceptance criteria checklist):</strong><br />
+    - complexity (how many components does this change affect? frontend/backend/DB etc.) <br />
+    - unit tests involved? <br />
+    - integration tests involved? <br />
+    - translations changes involved? <br />
+    - build scripts/CI changes involved? <br />
+    - documentation updates involved? <br />
+    etc.<br />
 
 </p>
 @if (participants == null)
@@ -56,7 +59,7 @@ else
     </table>
 
     <button class="btn btn-warning" @onclick="(() => Reset())">Reset estimates</button>
-    <br/>
+    <br />
 
     <hr />
     <p>Time since start: @_timerSecondsCount sec.</p>
@@ -94,7 +97,7 @@ else
         {
             await TeamsService.Save(participants[_currentUserNr], team);
             team = TeamsService.GetTeam(teamName, password);
-            participants = await DailyService.GetParticipants(team,false);
+            participants = await DailyService.GetParticipants(team, false);
             StateHasChanged();
         }
     }
@@ -109,7 +112,7 @@ else
             participants = await DailyService.GetParticipants(team, false);
             foreach (var p in participants)
             {
-                p.Estimation = Participant.NotEstimated;
+                p.Joined = false;
             }
             _updateTimer = new Timer(state => { InvokeAsync(UpdateCounter); }, null, 0, 1000);
             await TeamsService.SaveLoginTimeAmount(team.Id);
@@ -144,7 +147,7 @@ else
         foreach (var p in participants)
         {
             p.Timer = 0;
-            p.Estimation = Participant.NotEstimated;
+            p.Joined = false;
             p.Estimate = "Not ready";
         }
 
@@ -153,11 +156,31 @@ else
         _currentUserNr = -1;
     }
 
+    int calcJoined()
+    {
+        int joinedAmount = 0;
+        for (int i = 0; i < this.participants.Length; i++)
+        {
+            if (this.participants[i].Joined)
+            {
+                joinedAmount++;
+            }
+        }
+        return joinedAmount;
+    }
+
     void SetCurrentUser(int userNrClicked)
     {
-        _currentUserNr = userNrClicked;
-        this.participants[userNrClicked].Estimation = 0;
-        this.participants[userNrClicked].Estimate = "";
+        if (calcJoined() > 0) return;
+
+        if (!this.participants[userNrClicked].Joined)
+        {
+            _currentUserNr = userNrClicked;
+            this.participants[userNrClicked].Joined = true;
+            this.participants[userNrClicked].Estimate = "";
+
+            TeamsService.Save(this.participants[userNrClicked], team);
+        }
         StateHasChanged();
     }
 

@@ -10,30 +10,8 @@ namespace ScrumBlazor.Data
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int Timer { get; set; }
-
-        public double Estimation { get; set; }
-
+        public bool Joined { get; set; }
+        public bool Disabled => !Joined;
         public string Estimate { get; set; }
-
-        public bool Disabled
-        {
-            get { return this.Estimation.Equals(NotEstimated); }
-        }
-
-        public string EstimationStr
-        {
-            get { return Disabled ? "Not Estimated" : this.Estimation.ToString(); }
-            set
-            {
-                try
-                {
-                    this.Estimation = Convert.ToDouble(value);
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-        }
     }
 }
