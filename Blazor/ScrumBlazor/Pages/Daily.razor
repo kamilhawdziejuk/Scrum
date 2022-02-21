@@ -15,7 +15,8 @@ Password:
         <label>Join the session to generate team members sequence. Share your screen and start <strong>meeting agenda</strong>:</label><br/>
         <label>- what did I do yesterday that helped team meet the Sprint Goal?</label><br />
         <label>- what will I do today to help team meet the Sprint Goal?</label><br />
-        <label>- do I see any impediment that prevents me or the team from meeting the Sprint Goal?</label><br />
+        <label>- do I see any impediment that prevents me or the team from meeting the Sprint Goal?</label><br />       
+        <label>- type question of a day:</label><input size="60" style="color: green" placeholder="Type the Question of a Day here..." @bind="question"/> .. or <button class="btn btn-primary" @onclick="(() => GenerateQuestion())">Generate</button><br />
 
 @if (participants == null)
 {
@@ -61,6 +62,7 @@ else
     int _currentUserNr = -1;
     Timer _updateTimer;
     int _timerSecondsCount = 0;
+    string question = "Type it here";
 
     public string getClass(int participantNr)
     {
@@ -88,6 +90,12 @@ else
             await _updateTimer.DisposeAsync();
             await TeamsService.Save(participants, team);
         }
+    }
+
+    public async Task GenerateQuestion()
+    {
+        question = DailyService.GetQuestionOfADay();
+        StateHasChanged();
     }
 
     public async Task LogIn()

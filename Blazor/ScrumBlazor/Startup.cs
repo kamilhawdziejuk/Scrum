@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScrumBlazor.Data;
+using ScrumBlazor.Hubs;
+using System.Linq;
 
 namespace ScrumBlazor
 {
@@ -25,6 +28,13 @@ namespace ScrumBlazor
             services.AddServerSideBlazor();
             services.AddSingleton<DailyService>();
             services.AddSingleton<TeamsService>();
+            //services.AddSingleton<EstimateService>();
+
+            //services.AddResponseCompression(opts =>
+            //{
+            //    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+            //        new[] { "application/octet-stream" });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +63,9 @@ namespace ScrumBlazor
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
+                //endpoints.MapFallbackToPage("/_Host");
+
+                //endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
