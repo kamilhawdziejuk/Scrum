@@ -4,6 +4,9 @@
 @using ScrumBlazor.Data
 @inject DailyService DailyService
 @inject TeamsService TeamsService
+@inject EstimateService EstimateService
+@implements IDisposable
+
 <h4>Poker planning / PI voting meeting:</h4>
 Team Name:
 <input placeholder="Your team name" @bind="teamName" />
@@ -65,7 +68,59 @@ else
     <p>Time since start: @_timerSecondsCount sec.</p>
 }
 
+
+<div>
+    <label for="userInput">User:</label>
+    <input id="userInput" @bind="@userInput" />
+</div>
+<div class="form-group">
+    <label for="messageInput">Message:</label>
+    <input id="messageInput" @bind="@messageInput" />
+</div>
+<button @onclick="@(() => EstimateService.Send(userInput, messageInput))"
+        disabled="@(!EstimateService.IsConnected)">
+    Send Message
+</button>
+
+<hr />
+
+<ul id="messagesList">
+    @foreach (var message in messages)
+    {
+        <li>@message</li>
+    }
+</ul>
+
+
 @code {
+
+
+    List<string> messages = new List<string>();
+    string userInput;
+    string messageInput;
+
+    protected override void OnInitialized()
+    {
+        EstimateService.Notify += OnNotify;
+
+    }
+
+    public void OnNotify()
+    {
+        if (!string.IsNullOrEmpty(EstimateService.User))
+        {
+            var encodedMsg = EstimateService.User + " says " + EstimateService.Message;
+            messages.Add(encodedMsg);
+        }
+
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+    /* ------------------ */
+
 
     string teamName;
     string password;
@@ -88,7 +143,16 @@ else
 
     public void Dispose()
     {
-        _updateTimer.Dispose();
+        if (_updateTimer != null)
+        {
+
+            _updateTimer.Dispose();
+        }
+
+        if (EstimateService != null)
+        {
+            EstimateService.Notify -= OnNotify;
+        }
     }
 
     public async Task Save()

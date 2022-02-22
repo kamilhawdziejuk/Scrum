@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-namespace ScrumBlazor.Hubs
+namespace ScrumBlazor
 {
     public class ChatHub : Hub
     {

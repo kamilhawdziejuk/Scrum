@@ -1,12 +1,8 @@
 using System.Linq;
 using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.SignalR;
+using System;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace ScrumBlazor.Data
@@ -14,7 +10,32 @@ namespace ScrumBlazor.Data
     public class EstimateService
     {
         public event Action Notify;
-        //HubConnection hubConnection;
+        public string User { get; set; }
+        public string Message { get; set; }
+
+        HubConnection hubConnection;
+
+        public EstimateService(NavigationManager navigationManager)
+        {
+            hubConnection = new HubConnectionBuilder()
+           .WithUrl(navigationManager.ToAbsoluteUri("/chatHub"))
+           .Build();
+
+            hubConnection.On<string, string>("ReceiveMessage", (user,
+                                                              message) =>
+            {
+                User = user;
+                Message = message;
+
+                if (Notify != null)
+                {
+                    Notify?.Invoke();
+                }
+            });
+
+            hubConnection.StartAsync();
+            hubConnection.SendAsync("SendMessage", null, null);
+        }
 
         public async Task Save(Participant participant, Team team)
         {
@@ -33,5 +54,11 @@ namespace ScrumBlazor.Data
             db.SaveChanges();
 
         }
+
+        public void Send(string userInput, string messageInput) =>
+            hubConnection.SendAsync("SendMessage", userInput, messageInput);
+
+        public bool IsConnected => hubConnection.State ==
+                                               HubConnectionState.Connected;
     }
 }

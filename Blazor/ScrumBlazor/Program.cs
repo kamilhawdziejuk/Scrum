@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-//using Microsoft.AspNetCore.ResponseCompression;
-//using ScrumBlazor.Hubs;
 
 namespace ScrumBlazor
 {
