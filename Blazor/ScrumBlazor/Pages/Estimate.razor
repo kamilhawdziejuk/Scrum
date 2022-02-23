@@ -68,20 +68,6 @@ else
     <p>Time since start: @_timerSecondsCount sec.</p>
 }
 
-
-<div>
-    <label for="userInput">User:</label>
-    <input id="userInput" @bind="@userInput" />
-</div>
-<div class="form-group">
-    <label for="messageInput">Message:</label>
-    <input id="messageInput" @bind="@messageInput" />
-</div>
-<button @onclick="@(() => EstimateService.Send(userInput, messageInput))"
-        disabled="@(!EstimateService.IsConnected)">
-    Send Message
-</button>
-
 <hr />
 
 <ul id="messagesList">
@@ -96,9 +82,6 @@ else
 
 
     List<string> messages = new List<string>();
-    string userInput;
-    string messageInput;
-
     protected override void OnInitialized()
     {
         EstimateService.Notify += OnNotify;
@@ -159,6 +142,9 @@ else
     {
         if (team != null)
         {
+            EstimateService.Send(participants[_currentUserNr].Name, participants[_currentUserNr].Estimate);
+
+
             await TeamsService.Save(participants[_currentUserNr], team);
             team = TeamsService.GetTeam(teamName, password);
             participants = await DailyService.GetParticipants(team, false);
@@ -243,6 +229,11 @@ else
             _currentUserNr = userNrClicked;
             this.participants[userNrClicked].Joined = true;
             this.participants[userNrClicked].Estimate = "";
+
+            EstimateService.User = this.participants[userNrClicked].Name;
+
+
+            EstimateService.Send(EstimateService.User, "Joined");
 
             TeamsService.Save(this.participants[userNrClicked], team);
         }
